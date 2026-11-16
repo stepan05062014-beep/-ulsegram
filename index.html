@@ -1681,6 +1681,210 @@ a:hover {
   background: var(--bg-hover);
 }
 
+/* Stickers ("Мои стикеры") */
+.sticker-wrap {
+  position: relative;
+}
+.sticker-panel {
+  position: absolute;
+  right: 0;
+  bottom: 48px;
+  width: 296px;
+  max-height: 348px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  z-index: 30;
+  overflow: hidden;
+}
+.sticker-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+}
+.sticker-tab {
+  flex: 1;
+  padding: 10px 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.sticker-tab.active {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.sticker-body {
+  padding: 10px;
+  overflow-y: auto;
+}
+.sticker-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.sticker-cell {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0;
+}
+.sticker-cell:hover {
+  border-color: var(--accent-strong);
+}
+.sticker-cell img,
+.sticker-cell video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+.sticker-del {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 11px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.sticker-cell:hover .sticker-del {
+  opacity: 1;
+}
+.sticker-empty {
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 22px 10px;
+  line-height: 1.55;
+}
+.sticker-create {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sticker-create-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  text-align: left;
+  transition: border-color 0.15s;
+}
+.sticker-create-btn:hover {
+  border-color: var(--accent-strong);
+}
+.sticker-create-ico {
+  font-size: 26px;
+  line-height: 1;
+}
+.sticker-create-txt {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.sticker-create-txt b {
+  font-size: 14px;
+}
+.sticker-create-txt small {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+.stk-editor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.stk-canvas {
+  width: min(280px, 70vw);
+  height: min(280px, 70vw);
+  border-radius: 18px;
+  background: repeating-conic-gradient(rgba(125,125,125,0.18) 0% 25%, transparent 0% 50%) 50% / 22px 22px;
+  border: 1px solid var(--border-strong);
+  touch-action: none;
+  cursor: grab;
+}
+.stk-video {
+  width: min(240px, 66vw);
+  border-radius: 18px;
+  background: #000;
+}
+.stk-zoom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+.stk-zoom input[type="range"] {
+  flex: 1;
+  accent-color: var(--accent-strong);
+}
+.stk-hint {
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  line-height: 1.5;
+  text-align: center;
+}
+.stk-status {
+  color: var(--accent);
+  font-size: 12.5px;
+  min-height: 18px;
+  text-align: center;
+}
+.stk-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  width: 100%;
+}
+.stk-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+/* sticker as message */
+.msg-sticker-wrap {
+  line-height: 0;
+  margin: 2px 0;
+}
+.msg-sticker {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+.msg-bubble.sticker-only {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 2px 0;
+  min-width: 0;
+}
+.msg-bubble.sticker-only .msg-meta {
+  color: var(--text-secondary);
+}
+.msg-row.out .msg-bubble.sticker-only .msg-meta {
+  justify-content: flex-end;
+}
+
 /* Info Drawer */
 .info-drawer {
   width: var(--info-w);
@@ -3172,6 +3376,8 @@ a:hover {
                   <span class="menu-ico">📄</span><span>Файл / Документ</span>
                   <input id="docFileInput" type="file">
                 </label>
+                <input id="stickerPhotoInput" type="file" accept="image/*" hidden>
+                <input id="stickerVideoInput" type="file" accept="video/*" hidden>
                 <button type="button" class="menu-item" id="openWhiteboardMenuBtn">
                   <span class="menu-ico">🎨</span><span>Живая рисовалка</span>
                 </button>
@@ -3199,6 +3405,36 @@ a:hover {
                 </svg>
               </button>
               <div id="emojiPicker" class="emoji-picker hidden" role="dialog" aria-label="Выбор эмодзи"></div>
+            </div>
+
+            <div class="sticker-wrap">
+              <button id="stickerBtn" class="icon-btn" type="button" title="Стикеры" aria-label="Стикеры">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2.5 L14.4 9.6 L21.5 12 L14.4 14.4 L12 21.5 L9.6 14.4 L2.5 12 L9.6 9.6 Z"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>
+                </svg>
+              </button>
+              <div id="stickerPanel" class="sticker-panel hidden" role="dialog" aria-label="Мои стикеры">
+                <div class="sticker-tabs">
+                  <button type="button" class="sticker-tab active" data-stab="mine">🌟 Мои стикеры</button>
+                  <button type="button" class="sticker-tab" data-stab="create">➕ Создать</button>
+                </div>
+                <div class="sticker-body">
+                  <div id="stickerMinePane">
+                    <div id="stickerGrid" class="sticker-grid"></div>
+                    <div id="stickerEmpty" class="sticker-empty hidden">Здесь пока пусто.<br>Создайте стикер из фото или видео 👇<br><br><button type="button" id="stickerEmptyCreateBtn" class="btn btn-primary sm">➕ Создать стикер</button></div>
+                  </div>
+                  <div id="stickerCreatePane" class="sticker-create hidden">
+                    <button type="button" id="stickerFromPhotoBtn" class="sticker-create-btn">
+                      <span class="sticker-create-ico">📷</span>
+                      <span class="sticker-create-txt"><b>Из фотографии</b><small>Квадратный стикер с подгонкой масштаба и сдвига</small></span>
+                    </button>
+                    <button type="button" id="stickerFromVideoBtn" class="sticker-create-btn">
+                      <span class="sticker-create-ico">🎬</span>
+                      <span class="sticker-create-txt"><b>Из видео</b><small>Зацикленный стикер из первых 3 секунд, без звука</small></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <button id="sendOrMicBtn" class="send-btn" type="button" title="Голосовое сообщение" aria-label="Отправить или записать голосовое">
@@ -3359,7 +3595,7 @@ a:hover {
       <canvas id="arcadeCanvas" class="arcade-canvas" width="440" height="620"></canvas>
       <div id="arcadePanel" class="arcade-panel">
         <h3 id="arcadePanelTitle">🚀 Звёздный уворот</h3>
-        <p id="arcadePanelText">Управляйте искрой пальцем, мышкой или стрелками. Уворачивайтесь от метеоритов, лазеров и самонаводящихся мин!<br><br><b>Награды за забег:</b><br>15с → +5 ⭐ · 30с → +15 ⭐ · 50с → +35 ⭐ · 75с → +75 ⭐ (+ золотые ⭐ в полёте!)</p>
+        <p id="arcadePanelText">Управляйте искрой пальцем, мышкой или стрелками. Уворачивайтесь от метеоритов, лазеров и самонаводящихся мин!<br><br><b>Награды за забег:</b><br>20с → +3 ⭐ · 35с → +7 ⭐ · 55с → +15 ⭐ · 80с → +30 ⭐ (+ до 6 ⭐ бонусных в полёте)</p>
         <div style="display:flex;flex-direction:column;gap:8px;">
           <button id="arcadeStartBtn" type="button" class="btn btn-primary">🚀 Обычный вылет (бесплатно)</button>
           <button id="arcadeWagerBtn" type="button" class="btn btn-secondary" style="border-color:rgba(251,191,36,0.55);color:#fbbf24;">🔥 Ва-банк: ставка 15 ⭐ → приз 40 ⭐ (40с)</button>
@@ -13895,6 +14131,7 @@ var qrcode = function() {
       receivedGifts: getReceivedGifts(),
       arcadeStats: getArcadeStats(),
       perks: getPerks(),
+      stickers: getStickers(),
       messages
     };
   }
@@ -13915,6 +14152,7 @@ var qrcode = function() {
     if (Array.isArray(data.receivedGifts)) lsSet('gifts_received', data.receivedGifts.slice(-250));
     if (data.arcadeStats && typeof data.arcadeStats === 'object') setArcadeStats(data.arcadeStats);
     if (data.perks && typeof data.perks === 'object') setPerks(data.perks);
+    if (Array.isArray(data.stickers)) saveStickers(data.stickers);
     if (Array.isArray(data.messages)) {
       for (const msg of data.messages) {
         if (msg && msg.id && msg.chatId) {
@@ -14075,6 +14313,22 @@ var qrcode = function() {
     };
   }
 
+  function getStickers() {
+    const arr = lsGet('stickers', []);
+    return Array.isArray(arr) ? arr.filter((x) => x && typeof x.dataUrl === 'string' && x.dataUrl.startsWith('data:') && typeof x.id === 'string').slice(-120) : [];
+  }
+
+  function saveStickers(list) {
+    const clean = (Array.isArray(list) ? list : [])
+      .filter((x) => x && typeof x.dataUrl === 'string' && x.dataUrl.startsWith('data:'))
+      .slice(-120)
+      .map((x) => ({
+        ...x,
+        id: typeof x.id === 'string' && x.id ? x.id : 'stk_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36)
+      }));
+    lsSet('stickers', clean);
+  }
+
   function setArcadeStats(patch) {
     const next = { ...getArcadeStats(), ...patch };
     lsSet('arcade_stats', next);
@@ -14190,6 +14444,8 @@ var qrcode = function() {
     addReceivedGift,
     getArcadeStats,
     setArcadeStats,
+    getStickers,
+    saveStickers,
     removeReceivedGift,
     getPerks,
     setPerks,
@@ -16172,6 +16428,17 @@ var qrcode = function() {
     messageInput: $('messageInput'),
     emojiBtn: $('emojiBtn'),
     emojiPicker: $('emojiPicker'),
+    stickerBtn: $('stickerBtn'),
+    stickerPanel: $('stickerPanel'),
+    stickerGrid: $('stickerGrid'),
+    stickerEmpty: $('stickerEmpty'),
+    stickerMinePane: $('stickerMinePane'),
+    stickerCreatePane: $('stickerCreatePane'),
+    stickerEmptyCreateBtn: $('stickerEmptyCreateBtn'),
+    stickerFromPhotoBtn: $('stickerFromPhotoBtn'),
+    stickerFromVideoBtn: $('stickerFromVideoBtn'),
+    stickerPhotoInput: $('stickerPhotoInput'),
+    stickerVideoInput: $('stickerVideoInput'),
     sendOrMicBtn: $('sendOrMicBtn'),
     micIcon: $('micIcon'),
     sendIcon: $('sendIcon'),
@@ -17495,13 +17762,20 @@ var qrcode = function() {
     if (!media || typeof media !== 'object') return null;
     const dataUrl = typeof media.dataUrl === 'string' ? media.dataUrl : '';
     if (!dataUrl.startsWith('data:')) return null;
-    const kind = media.kind === 'image' || media.kind === 'audio' ? media.kind : 'file';
+    const kind = media.kind === 'image' || media.kind === 'audio' || media.kind === 'sticker' ? media.kind : 'file';
     // Strict MIME safety for inline images/audio (never inline SVG as html)
     if (kind === 'image' && !/^data:image\/(png|jpeg|jpg|webp|gif);base64,/i.test(dataUrl)) {
       return { kind: 'file', name: media.name || 'image', mime: 'application/octet-stream', size: media.size || 0, dataUrl };
     }
     if (kind === 'audio' && !/^data:audio\/(webm|ogg|mp4|mpeg|wav|aac);/i.test(dataUrl)) {
       return { kind: 'file', name: media.name || 'audio', mime: 'application/octet-stream', size: media.size || 0, dataUrl };
+    }
+    if (kind === 'sticker') {
+      const okStatic = /^data:image\/(png|jpeg|jpg|webp|gif|avif);base64,/i.test(dataUrl);
+      const okVideo = /^data:video\/(webm|mp4);base64,/i.test(dataUrl);
+      if ((!okStatic && !okVideo) || dataUrl.length > 200000) {
+        return { kind: 'file', name: media.name || 'sticker', mime: 'application/octet-stream', size: media.size || 0, dataUrl };
+      }
     }
     return {
       kind,
@@ -17569,7 +17843,7 @@ var qrcode = function() {
         : '🎮 Игра «Крестики-нолики»';
     }
     if (msg.media) {
-      const tag = msg.media.kind === 'image' ? '🖼️ Фото' : msg.media.kind === 'audio' ? '🎤 Голосовое' : `📄 ${msg.media.name}`;
+      const tag = msg.media.kind === 'image' ? '🖼️ Фото' : msg.media.kind === 'audio' ? '🎤 Голосовое' : msg.media.kind === 'sticker' ? '🌟 Стикер' : `📄 ${msg.media.name}`;
       return msg.text ? `${tag}: ${msg.text}` : tag;
     }
     return msg.text || '';
@@ -18889,6 +19163,7 @@ var qrcode = function() {
         avatarColor: (state.contacts[m.senderPk] && state.contacts[m.senderPk].avatarColor) || C.colorForPubkey(m.senderPk)
       };
 
+      const stickerOnly = Boolean(m.media && m.media.kind === 'sticker' && !m.text && !m.gift && !m.starGrant && !(m.game && m.game.kind === 'ttt') && !m.replyTo && !m.forwardedFrom);
       let mediaHtml = '';
       if (m.media) {
         if (m.media.kind === 'image') {
@@ -18908,6 +19183,11 @@ var qrcode = function() {
               </div>
             </div>
           `;
+        } else if (m.media.kind === 'sticker') {
+          const isVid = /^data:video\//i.test(m.media.dataUrl);
+          mediaHtml = isVid
+            ? `<div class="msg-sticker-wrap"><video class="msg-sticker" src="${escapeHtml(m.media.dataUrl)}" autoplay loop muted playsinline preload="auto"></video></div>`
+            : `<div class="msg-sticker-wrap" data-lightbox-id="${escapeHtml(m.id)}"><img class="msg-sticker" src="${escapeHtml(m.media.dataUrl)}" alt="Стикер" loading="lazy"></div>`;
         } else {
           mediaHtml = `
             <div class="file-card">
@@ -18952,7 +19232,7 @@ var qrcode = function() {
               <button type="button" class="hover-act-btn" data-quick-reply="${escapeHtml(m.id)}" title="Ответить">↩</button>
               <button type="button" class="hover-act-btn" data-quick-menu="${escapeHtml(m.id)}" title="Ещё">⋯</button>
             </div>
-            <div class="msg-bubble">
+            <div class="msg-bubble${stickerOnly ? ' sticker-only' : ''}">
               ${showGroupAvatar && isFirst
                 ? `<div class="msg-sender-name" style="color:${escapeHtml(senderColor)}" data-open-dm="${escapeHtml(m.senderPk)}">${styledNameHtml(senderEntity.name, m.senderPk, chat, senderEntity)}</div>`
                 : ''}
@@ -19672,6 +19952,305 @@ var qrcode = function() {
       });
     };
     draw();
+  }
+
+  /* ---------- «Мои стикеры»: создание из фото и видео ---------- */
+  const STICKER_STATIC_MAX_CHARS = 42000;
+  const STICKER_VIDEO_MAX_CHARS = 46000;
+
+  function isVideoStickerUrl(u) {
+    return /^data:video\//i.test(u || '');
+  }
+
+  function sendSticker(stk) {
+    const chatId = state.activeChatId;
+    if (!chatId || !stk || !stk.dataUrl) return;
+    sendSingleMediaMessage(chatId, {
+      kind: 'sticker',
+      name: stk.name || 'sticker',
+      mime: stk.mime || (isVideoStickerUrl(stk.dataUrl) ? 'video/webm' : 'image/webp'),
+      size: Math.floor((stk.dataUrl.length * 3) / 4),
+      dataUrl: stk.dataUrl
+    });
+    el.stickerPanel.classList.add('hidden');
+  }
+
+  function stickerMediaHtml(dataUrl) {
+    return isVideoStickerUrl(dataUrl)
+      ? `<video src="${escapeHtml(dataUrl)}" autoplay loop muted playsinline preload="auto"></video>`
+      : `<img src="${escapeHtml(dataUrl)}" alt="Стикер">`;
+  }
+
+  function renderStickerGrid() {
+    const grid = el.stickerGrid;
+    if (!grid) return;
+    const list = S.getStickers().slice().reverse();
+    el.stickerEmpty.classList.toggle('hidden', list.length > 0);
+    grid.innerHTML = list.map((stk) => (
+      `<button type="button" class="sticker-cell" data-sticker-send="${escapeHtml(stk.id)}" title="Отправить стикер">` +
+        stickerMediaHtml(stk.dataUrl) +
+        `<span class="sticker-del" data-sticker-del="${escapeHtml(stk.id)}" title="Удалить стикер">✕</span>` +
+      `</button>`
+    )).join('');
+    grid.querySelectorAll('[data-sticker-send]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (e.target.closest('[data-sticker-del]')) return;
+        const stk = S.getStickers().find((x) => x.id === btn.dataset.stickerSend);
+        if (stk) sendSticker(stk);
+      });
+    });
+    grid.querySelectorAll('[data-sticker-del]').forEach((delBtn) => {
+      delBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!confirm('Удалить этот стикер из вашей подборки?')) return;
+        S.saveStickers(S.getStickers().filter((x) => x.id !== delBtn.dataset.stickerDel));
+        renderStickerGrid();
+      });
+    });
+  }
+
+  function setStickerTab(tab) {
+    el.stickerPanel.querySelectorAll('.sticker-tab').forEach((b) => b.classList.toggle('active', b.dataset.stab === tab));
+    el.stickerMinePane.classList.toggle('hidden', tab !== 'mine');
+    el.stickerCreatePane.classList.toggle('hidden', tab !== 'create');
+    if (tab === 'mine') renderStickerGrid();
+  }
+
+  function initStickerPanel() {
+    if (!el.stickerBtn) return;
+    el.stickerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = el.stickerPanel.classList.contains('hidden');
+      el.stickerPanel.classList.toggle('hidden');
+      el.emojiPicker.classList.add('hidden');
+      el.attachMenu.classList.add('hidden');
+      if (willOpen) setStickerTab('mine');
+    });
+    el.stickerPanel.querySelectorAll('.sticker-tab').forEach((b) => {
+      b.addEventListener('click', (e) => { e.stopPropagation(); setStickerTab(b.dataset.stab); });
+    });
+    el.stickerFromPhotoBtn.addEventListener('click', () => el.stickerPhotoInput.click());
+    el.stickerFromVideoBtn.addEventListener('click', () => el.stickerVideoInput.click());
+    el.stickerEmptyCreateBtn.addEventListener('click', () => setStickerTab('create'));
+    el.stickerPhotoInput.addEventListener('change', (e) => {
+      const file = (e.target.files || [])[0];
+      e.target.value = '';
+      if (file) openStickerPhotoEditor(file);
+    });
+    el.stickerVideoInput.addEventListener('change', (e) => {
+      const file = (e.target.files || [])[0];
+      e.target.value = '';
+      if (file) openStickerVideoEditor(file);
+    });
+    renderStickerGrid();
+  }
+
+  function openStickerPhotoEditor(file) {
+    if (!file.type || !file.type.startsWith('image/')) { toast('Выберите изображение'); return; }
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onerror = () => { URL.revokeObjectURL(url); toast('Не удалось прочитать изображение'); };
+    img.onload = () => {
+      openModal('📷 Стикер из фото', `
+        <div class="stk-editor">
+          <canvas id="stkCanvas" width="512" height="512" class="stk-canvas" aria-label="Предпросмотр стикера"></canvas>
+          <div class="stk-zoom"><span>🔍</span><input type="range" id="stkZoom" min="100" max="320" value="100" aria-label="Масштаб"></div>
+          <label class="stk-row"><input type="checkbox" id="stkRounded" checked> Скруглить углы</label>
+          <div class="stk-actions">
+            <button id="stkCancelBtn" type="button" class="btn btn-secondary">Отмена</button>
+            <button id="stkAddBtn" type="button" class="btn btn-primary">✓ Добавить стикер</button>
+          </div>
+        </div>`);
+      const canvas = document.getElementById('stkCanvas');
+      const ctx = canvas.getContext('2d');
+      const zoomInput = document.getElementById('stkZoom');
+      const roundedInput = document.getElementById('stkRounded');
+      const st = { zoom: 1, ox: 0, oy: 0, dragging: false, lx: 0, ly: 0 };
+      const coverScale = () => Math.max(512 / img.naturalWidth, 512 / img.naturalHeight) * st.zoom;
+      const clampOffsets = () => {
+        const sc = coverScale();
+        const w = img.naturalWidth * sc, h = img.naturalHeight * sc;
+        const maxX = Math.max(0, (w - 512) / 2), maxY = Math.max(0, (h - 512) / 2);
+        st.ox = Math.max(-maxX, Math.min(maxX, st.ox));
+        st.oy = Math.max(-maxY, Math.min(maxY, st.oy));
+      };
+      const draw = () => {
+        const sc = coverScale();
+        const w = img.naturalWidth * sc, h = img.naturalHeight * sc;
+        ctx.clearRect(0, 0, 512, 512);
+        ctx.drawImage(img, (512 - w) / 2 + st.ox, (512 - h) / 2 + st.oy, w, h);
+        if (roundedInput.checked) {
+          ctx.globalCompositeOperation = 'destination-in';
+          ctx.beginPath();
+          if (typeof ctx.roundRect === 'function') ctx.roundRect(0, 0, 512, 512, 96);
+          else ctx.rect(0, 0, 512, 512);
+          ctx.fill();
+          ctx.globalCompositeOperation = 'source-over';
+        }
+      };
+      draw();
+      zoomInput.addEventListener('input', () => { st.zoom = Number(zoomInput.value) / 100; clampOffsets(); draw(); });
+      roundedInput.addEventListener('change', draw);
+      canvas.addEventListener('pointerdown', (e) => {
+        st.dragging = true; st.lx = e.clientX; st.ly = e.clientY;
+        try { canvas.setPointerCapture(e.pointerId); } catch {}
+        canvas.style.cursor = 'grabbing';
+      });
+      canvas.addEventListener('pointermove', (e) => {
+        if (!st.dragging) return;
+        const rect = canvas.getBoundingClientRect();
+        const k = 512 / Math.max(1, rect.width);
+        st.ox += (e.clientX - st.lx) * k;
+        st.oy += (e.clientY - st.ly) * k;
+        st.lx = e.clientX; st.ly = e.clientY;
+        clampOffsets(); draw();
+      });
+      const endDrag = () => { st.dragging = false; canvas.style.cursor = 'grab'; };
+      canvas.addEventListener('pointerup', endDrag);
+      canvas.addEventListener('pointercancel', endDrag);
+      document.getElementById('stkCancelBtn').addEventListener('click', () => { URL.revokeObjectURL(url); closeModal(); });
+      document.getElementById('stkAddBtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        const attempts = [[512, 0.85], [512, 0.7], [512, 0.55], [384, 0.6], [320, 0.55], [256, 0.5]];
+        let out = '', mime = 'image/webp';
+        for (const [size, q] of attempts) {
+          let srcCanvas = canvas;
+          if (size !== 512) {
+            srcCanvas = document.createElement('canvas');
+            srcCanvas.width = size; srcCanvas.height = size;
+            srcCanvas.getContext('2d').drawImage(canvas, 0, 0, size, size);
+          }
+          out = srcCanvas.toDataURL('image/webp', q);
+          if (out.indexOf('data:image/webp') !== 0) out = srcCanvas.toDataURL('image/png');
+          mime = out.indexOf('data:image/webp') === 0 ? 'image/webp' : 'image/png';
+          if (out.length <= STICKER_STATIC_MAX_CHARS) break;
+        }
+        if (out.length > STICKER_STATIC_MAX_CHARS) { toast('Не удалось уложить стикер в лимит — попробуйте более простой фрагмент'); return; }
+        const list = S.getStickers();
+        list.push({ id: C.randomId(8), name: 'sticker', mime, dataUrl: out, createdAt: Date.now() });
+        S.saveStickers(list);
+        URL.revokeObjectURL(url);
+        closeModal();
+        setStickerTab('mine');
+        el.stickerPanel.classList.remove('hidden');
+        toast('🌟 Стикер добавлен');
+      });
+    };
+    img.src = url;
+  }
+
+  function pickVideoStickerMime() {
+    if (typeof MediaRecorder === 'undefined') return '';
+    const candidates = ['video/webm;codecs=vp9', 'video/webm', 'video/mp4'];
+    for (const c of candidates) {
+      try { if (MediaRecorder.isTypeSupported(c)) return c; } catch {}
+    }
+    return '';
+  }
+
+  function openStickerVideoEditor(file) {
+    if (!file.type || !file.type.startsWith('video/')) { toast('Выберите видеофайл'); return; }
+    if (file.size > 40 * 1024 * 1024) { toast('Видео слишком тяжёлое (максимум 40 МБ)'); return; }
+    const mime = pickVideoStickerMime();
+    if (!mime || typeof HTMLCanvasElement === 'undefined' || !HTMLCanvasElement.prototype.captureStream) {
+      toast('Ваш браузер не умеет записывать видео-стикеры');
+      return;
+    }
+    const url = URL.createObjectURL(file);
+    openModal('🎬 Стикер из видео', `
+      <div class="stk-editor">
+        <video id="stkVidPreview" class="stk-video" src="${url}" muted playsinline loop autoplay preload="auto"></video>
+        <p class="stk-hint">Запишем первые <b>3 секунды</b> без звука как зацикленный стикер 240×240.</p>
+        <p id="stkRecStatus" class="stk-status"></p>
+        <div class="stk-actions">
+          <button id="stkRecCancelBtn" type="button" class="btn btn-secondary">Отмена</button>
+          <button id="stkRecBtn" type="button" class="btn btn-primary">⏺ Записать</button>
+        </div>
+      </div>`);
+    const preview = document.getElementById('stkVidPreview');
+    const statusEl = document.getElementById('stkRecStatus');
+    const recBtn = document.getElementById('stkRecBtn');
+    const cleanup = () => { try { preview.pause(); } catch {} URL.revokeObjectURL(url); };
+    document.getElementById('stkRecCancelBtn').addEventListener('click', () => { cleanup(); closeModal(); });
+
+    const encodeClip = (bitrate, sizePx, seconds) => new Promise((resolve, reject) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = sizePx; canvas.height = sizePx;
+      const ctx = canvas.getContext('2d');
+      let recorder;
+      try {
+        recorder = new MediaRecorder(canvas.captureStream(12), { mimeType: mime, videoBitsPerSecond: bitrate });
+      } catch (err) { reject(err); return; }
+      const chunks = [];
+      recorder.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
+      recorder.onerror = reject;
+      recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: mime.split(';')[0] });
+        const reader = new FileReader();
+        reader.onload = () => resolve({ dataUrl: reader.result, outMime: mime.split(';')[0] });
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      };
+      try { preview.pause(); } catch {}
+      preview.currentTime = 0;
+      const t0 = performance.now();
+      const drawFrame = () => {
+        if (preview.videoWidth > 0) {
+          const cover = Math.max(sizePx / preview.videoWidth, sizePx / preview.videoHeight);
+          const w = preview.videoWidth * cover, h = preview.videoHeight * cover;
+          ctx.drawImage(preview, (sizePx - w) / 2, (sizePx - h) / 2, w, h);
+        }
+        if ((performance.now() - t0) / 1000 < seconds) requestAnimationFrame(drawFrame);
+      };
+      preview.play().then(() => {
+        try { recorder.start(250); } catch (err) { reject(err); return; }
+        drawFrame();
+        setTimeout(() => { try { recorder.stop(); } catch {} }, seconds * 1000 + 120);
+      }).catch(reject);
+    });
+
+    recBtn.addEventListener('click', async () => {
+      recBtn.disabled = true;
+      const attempts = [[110000, 240, 3], [75000, 208, 2.5], [55000, 176, 2]];
+      let res = null;
+      try {
+        for (const [bitrate, sizePx, secs] of attempts) {
+          statusEl.textContent = 'Идёт запись…';
+          res = await encodeClip(bitrate, sizePx, secs);
+          if (res && res.dataUrl && res.dataUrl.length <= STICKER_VIDEO_MAX_CHARS) break;
+        }
+      } catch { res = null; }
+      statusEl.textContent = '';
+      if (!res || !res.dataUrl || res.dataUrl.length > STICKER_VIDEO_MAX_CHARS + 8000) {
+        toast('Видео слишком детальное — попробуйте короткий и простой фрагмент');
+        recBtn.disabled = false;
+        return;
+      }
+      const kb = Math.round((res.dataUrl.length * 3) / 4 / 1024);
+      const outMime = res.outMime;
+      openModal('🎬 Готовый стикер', `
+        <div class="stk-editor">
+          <video class="stk-video" src="${res.dataUrl}" autoplay loop muted playsinline></video>
+          <p class="stk-hint">Готово: ${kb} КБ · ${outMime.indexOf('mp4') !== -1 ? 'MP4' : 'WebM'} · звук удалён · цикл</p>
+          <div class="stk-actions">
+            <button id="stkRedoBtn" type="button" class="btn btn-secondary">↻ Перезаписать</button>
+            <button id="stkKeepBtn" type="button" class="btn btn-primary">✓ Добавить стикер</button>
+          </div>
+        </div>`);
+      document.getElementById('stkRedoBtn').addEventListener('click', () => { cleanup(); closeModal(); openStickerVideoEditor(file); });
+      document.getElementById('stkKeepBtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        const list = S.getStickers();
+        list.push({ id: C.randomId(8), name: 'sticker', mime: outMime, dataUrl: res.dataUrl, createdAt: Date.now() });
+        S.saveStickers(list);
+        cleanup();
+        closeModal();
+        setStickerTab('mine');
+        el.stickerPanel.classList.remove('hidden');
+        toast('🌟 Стикер добавлен');
+      });
+    });
   }
 
   function insertAtCursor(textarea, str) {
@@ -20448,6 +21027,7 @@ var qrcode = function() {
       openArcadeGame();
     });
     initArcadeControls();
+    initStickerPanel();
     initWhiteboardControls();
 
     el.emojiBtn.addEventListener('click', (e) => {
@@ -20514,6 +21094,7 @@ var qrcode = function() {
       if (!e.target.closest('.compose-fab-wrap')) el.composeMenu.classList.add('hidden');
       if (!e.target.closest('.attach-wrap')) el.attachMenu.classList.add('hidden');
       if (!e.target.closest('.emoji-wrap')) el.emojiPicker.classList.add('hidden');
+      if (!e.target.closest('.sticker-wrap')) el.stickerPanel.classList.add('hidden');
       if (!e.target.closest('.dropdown-wrap')) el.chatMoreMenu.classList.add('hidden');
       if (!e.target.closest('.context-menu')) hideContextMenu();
     });
@@ -22175,11 +22756,10 @@ var qrcode = function() {
 
     drawArcadeSpark(ctx, arcade.px, arcade.py, arcade.elapsed < arcade.shieldUntil);
     el.arcadeTimeTxt.textContent = `${arcade.elapsed.toFixed(1)}с`;
-    const minGoal = arcade.wagerMode ? ARCADE_WAGER_GOAL_SEC : 20;
-    const pot = calcArcadeTimeReward(arcade.elapsed, arcade.wagerMode) + (arcade.elapsed >= minGoal ? arcade.bonusStars : 0);
+    const pot = calcArcadeTimeReward(arcade.elapsed, arcade.wagerMode) + arcade.bonusStars;
     el.arcadeRunStarsTxt.textContent = arcade.wagerMode
-      ? (arcade.elapsed >= ARCADE_WAGER_GOAL_SEC ? `${pot}` : `0 / ${ARCADE_WAGER_GOAL_SEC}с`)
-      : String(pot);
+      ? (arcade.elapsed >= ARCADE_WAGER_GOAL_SEC ? `${pot}` : `${arcade.bonusStars} ⭐ / цель ${ARCADE_WAGER_GOAL_SEC}с`)
+      : `${pot} ⭐`;
 
     if (hit) {
       finishArcadeRun();
@@ -22202,7 +22782,7 @@ var qrcode = function() {
     if (arcade.wagerMode) {
       if (sec >= ARCADE_WAGER_GOAL_SEC) {
         granted = ARCADE_WAGER_PRIZE + arcade.bonusStars;
-        if (!admin) S.addStars(granted);
+        if (granted > 0) S.addStars(granted);
         S.setArcadeStats({ bestSec: nextBest, totalEarned: stats.totalEarned + granted, wagerWins: stats.wagerWins + 1 });
         renderNavUser();
         msg += `🔥 <b>Победа в «Ва-банк»!</b> Забрано <b style="color:#fbbf24">+${granted} ⭐</b>!`;
@@ -22218,7 +22798,7 @@ var qrcode = function() {
 
       if (sec < 20) {
         S.setArcadeStats({ bestSec: nextBest });
-        msg += 'В хардкоре нужно продержаться минимум <b>20 секунд</b>, чтобы забрать ⭐!';
+        msg += `В хардкоре нужно продержаться минимум <b>20 секунд</b> — иначе и собранные <b>${arcade.bonusStars} ⭐</b> сгорают!`;
       } else if (cooldownLeft > 0) {
         S.setArcadeStats({ bestSec: nextBest });
         msg += `Потенциал ${totalReward} ⭐, но подождите <b>${cooldownLeft}с</b> (защита от фарма).`;
@@ -22227,7 +22807,7 @@ var qrcode = function() {
         msg += `Дневной лимит обычного режима (<b>${ARCADE_DAILY_CAP} ⭐</b>) исчерпан — попробуйте 🔥 Ва-банк!`;
       } else {
         granted = admin ? totalReward : Math.min(totalReward, dailyRoom);
-        if (!admin && granted > 0) S.addStars(granted);
+        if (granted > 0) S.addStars(granted);
         S.setArcadeStats({
           bestSec: nextBest,
           totalEarned: stats.totalEarned + granted,
