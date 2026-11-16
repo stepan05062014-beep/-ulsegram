@@ -3664,6 +3664,7 @@ a:hover {
       <button type="button" class="nav-item" data-nav="relays"><span>📡</span><span>Сеть и Nostr-реле</span></button>
       <button type="button" class="nav-item" data-nav="antispam"><span>🛡️</span><span>Антиспам</span><span id="navSpamState" class="nav-pill">Только по ссылке</span></button>
       <button type="button" class="nav-item" data-nav="sound"><span>🔔</span><span>Звук сообщений</span><span id="navSoundState" class="nav-pill">Вкл</span></button>
+      <button type="button" class="nav-item" data-nav="notifications"><span>📲</span><span>Уведомления в браузере</span><span id="navNotifState" class="nav-pill">Выкл</span></button>
       <button type="button" class="nav-item" data-nav="theme"><span>🎨</span><span>Тема оформления</span><span id="navThemeState" class="nav-pill">Тёмная</span></button>
       <div class="nav-sep"></div>
       <button type="button" class="nav-item" data-nav="ghpages"><span>🚀</span><span>Деплой на GitHub Pages</span></button>
@@ -16657,6 +16658,7 @@ var qrcode = function() {
     navStarsState: $('navStarsState'),
     navSpamState: $('navSpamState'),
     navSoundState: $('navSoundState'),
+    navNotifState: $('navNotifState'),
     navThemeState: $('navThemeState'),
 
     contextMenu: $('contextMenu'),
@@ -17981,7 +17983,18 @@ var qrcode = function() {
       if (!chat.muted) playPopSound();
       if (!chat.muted && state.settings.notifications && 'Notification' in window && Notification.permission === 'granted' && Date.now() > state.startupReadyAt) {
         try {
-          new Notification(chat.title, { body: previewForMessage(msg), icon: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmZjMjRiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMC41NSIgc3RvcC1jb2xvcj0iI2Y5NzMxNiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNlMTFkNDgiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiByeD0iMzAiIGZpbGw9InVybCgjYmcpIi8+CiAgPHBhdGggZD0iTTY0IDE0IEw3NS4yIDUyLjggTDExNCA2NCBMNzUuMiA3NS4yIEw2NCAxMTQgTDUyLjggNzUuMiBMMTQgNjQgTDUyLjggNTIuOCBaIiBmaWxsPSIjZmZmZmZmIi8+CiAgPGNpcmNsZSBjeD0iNjQiIGN5PSI2NCIgcj0iNi4yIiBmaWxsPSIjZjk3MzE2Ii8+CiAgPGNpcmNsZSBjeD0iOTciIGN5PSIzMSIgcj0iNSIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC45MiIvPgo8L3N2Zz4K' });
+          const n = new Notification(chat.title, {
+            body: previewForMessage(msg),
+            icon: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmZjMjRiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMC41NSIgc3RvcC1jb2xvcj0iI2Y5NzMxNiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNlMTFkNDgiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiByeD0iMzAiIGZpbGw9InVybCgjYmcpIi8+CiAgPHBhdGggZD0iTTY0IDE0IEw3NS4yIDUyLjggTDExNCA2NCBMNzUuMiA3NS4yIEw2NCAxMTQgTDUyLjggNzUuMiBMMTQgNjQgTDUyLjggNTIuOCBaIiBmaWxsPSIjZmZmZmZmIi8+CiAgPGNpcmNsZSBjeD0iNjQiIGN5PSI2NCIgcj0iNi4yIiBmaWxsPSIjZjk3MzE2Ii8+CiAgPGNpcmNsZSBjeD0iOTciIGN5PSIzMSIgcj0iNSIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC45MiIvPgo8L3N2Zz4K',
+            tag: 'chat:' + chatId,
+            renotify: true
+          });
+          n.onclick = () => {
+            try { window.focus(); } catch {}
+            closeNavDrawer();
+            selectChat(chatId);
+            n.close();
+          };
         } catch {}
       }
     } else if (!isOutgoing && state.activeChatId === chatId) {
@@ -19788,10 +19801,37 @@ var qrcode = function() {
     el.navStarsState.textContent = starsDisplayText(state.identity.pkHex);
     el.navSpamState.textContent = state.settings.strictAntiSpam ? 'Только по ссылке' : 'Открыто';
     el.navSoundState.textContent = state.settings.sound ? 'Вкл' : 'Выкл';
+    el.navNotifState.textContent = state.settings.notifications ? 'Вкл' : 'Выкл';
     el.navThemeState.textContent = state.settings.theme === 'dark' ? 'Тёмная' : 'Светлая';
     el.grantStarsMenuBtn.classList.toggle('hidden', !isGlobalAdmin(state.identity.pkHex));
     if (el.announceMenuBtn) el.announceMenuBtn.classList.toggle('hidden', !isGlobalAdmin(state.identity.pkHex));
     if (el.perkGrantMenuBtn) el.perkGrantMenuBtn.classList.toggle('hidden', !isGlobalAdmin(state.identity.pkHex));
+  }
+
+  async function toggleBrowserNotifications() {
+    if (state.settings.notifications) {
+      state.settings.notifications = false;
+      S.setSettings(state.settings);
+      renderNavUser();
+      toast('Уведомления в браузере выключены');
+      return;
+    }
+    if (!('Notification' in window)) {
+      toast('Этот браузер не поддерживает уведомления');
+      return;
+    }
+    let perm = Notification.permission;
+    if (perm !== 'granted') {
+      try { perm = await Notification.requestPermission(); } catch { perm = Notification.permission; }
+      if (perm !== 'granted') {
+        toast('Браузер не выдал разрешение на уведомления. Проверьте разрешения сайта (значок 🔒/ⓘ у адресной строки) и включите «Уведомления».', 4800);
+        return;
+      }
+    }
+    state.settings.notifications = true;
+    S.setSettings(state.settings);
+    renderNavUser();
+    toast('📲 Уведомления включены. Работают, пока Искра открыта во вкладке');
   }
 
   function openNavDrawer() {
@@ -21411,6 +21451,10 @@ var qrcode = function() {
         state.settings.sound = !state.settings.sound;
         S.setSettings(state.settings);
         renderNavUser();
+        return;
+      }
+      if (act === 'notifications') {
+        toggleBrowserNotifications();
         return;
       }
       closeNavDrawer();
