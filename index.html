@@ -2552,6 +2552,106 @@ a:hover {
   border-color: var(--success);
 }
 
+/* Checkers (Шашки) */
+.checkers-card {
+  width: min(300px, 72vw);
+  padding: 8px 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  user-select: none;
+}
+.checkers-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  padding: 0 2px;
+}
+.checkers-status {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  min-height: 18px;
+}
+.checkers-board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--border-strong);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+.chk-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #ecd3ab;
+  position: relative;
+  cursor: default;
+}
+.chk-cell.dark {
+  background: #8a5a30;
+}
+.chk-cell.playable,
+.chk-cell.target {
+  cursor: pointer;
+}
+.chk-cell.lastmove {
+  box-shadow: inset 0 0 0 999px rgba(251, 191, 36, 0.38);
+}
+.chk-cell.target::after {
+  content: '';
+  position: absolute;
+  width: 28%;
+  height: 28%;
+  border-radius: 50%;
+  background: rgba(23, 17, 14, 0.42);
+  pointer-events: none;
+}
+.chk-cell.target.capture::after {
+  width: 78%;
+  height: 78%;
+  background: transparent;
+  border: 3px solid rgba(239, 68, 68, 0.78);
+}
+.chk-cell.selected {
+  box-shadow: inset 0 0 0 3px var(--accent-strong), inset 0 0 18px rgba(249, 115, 22, 0.55);
+}
+.chk-piece {
+  width: 78%;
+  height: 78%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1;
+  pointer-events: none;
+  box-shadow: inset 0 -4px 6px rgba(0, 0, 0, 0.42), inset 0 3px 4px rgba(255, 255, 255, 0.45), 0 2px 3px rgba(0, 0, 0, 0.4);
+}
+.chk-piece.white {
+  background: radial-gradient(circle at 35% 32%, #fffaf0, #e9dcc7 58%, #b8a88f);
+  color: #5d5142;
+}
+.chk-piece.black {
+  background: radial-gradient(circle at 35% 32%, #52463c, #2d2620 58%, #120e0b);
+  color: #f5e9d0;
+}
+.chk-piece.king::after {
+  content: '♛';
+}
+.checkers-foot {
+  display: flex;
+  justify-content: center;
+}
+
 /* Lightbox */
 .lightbox {
   position: fixed;
@@ -3383,6 +3483,9 @@ a:hover {
                 </button>
                 <button type="button" class="menu-item" id="startTttMenuBtn">
                   <span class="menu-ico">🎮</span><span>Крестики-нолики</span>
+                </button>
+                <button type="button" class="menu-item" id="startCheckersMenuBtn">
+                  <span class="menu-ico">⚫</span><span>Шашки</span>
                 </button>
                 <button type="button" class="menu-item" id="openGiftMenuBtn">
                   <span class="menu-ico">🎁</span><span>Подарить подарок</span>
@@ -16396,6 +16499,7 @@ var qrcode = function() {
     docFileInput: $('docFileInput'),
     openWhiteboardMenuBtn: $('openWhiteboardMenuBtn'),
     startTttMenuBtn: $('startTttMenuBtn'),
+    startCheckersMenuBtn: $('startCheckersMenuBtn'),
     openGiftMenuBtn: $('openGiftMenuBtn'),
     grantStarsMenuBtn: $('grantStarsMenuBtn'),
     openArcadeMenuBtn: $('openArcadeMenuBtn'),
@@ -17220,7 +17324,7 @@ var qrcode = function() {
     if (cutoff > 0 && (rumorTs <= cutoff || payloadTs <= cutoff)) return;
 
     // Control actions (edit/delete/reaction/ttt_move/profile_meta) must never resurrect a deleted chat
-    const isControlOnly = payload.type === 'edit' || payload.type === 'delete' || payload.type === 'reaction' || payload.type === 'ttt_move' || payload.type === 'profile_meta';
+    const isControlOnly = payload.type === 'edit' || payload.type === 'delete' || payload.type === 'reaction' || payload.type === 'ttt_move' || payload.type === 'checkers_move' || payload.type === 'profile_meta';
     if (isControlOnly && !state.chats[chatId]) return;
 
     if (!isSelfMsg) {
@@ -17542,6 +17646,39 @@ var qrcode = function() {
       return;
     }
 
+    if (payload.type === 'checkers_move' && payload.targetId) {
+      if (payload.id && !S.markActionApplied(payload.id)) return;
+      const target = await S.getMessage(payload.targetId);
+      if (target && target.game && target.game.kind === 'checkers') {
+        const curGame = target.game;
+        const incomingBoard = Array.isArray(payload.board) ? payload.board.map(Number) : null;
+        if (!incomingBoard || incomingBoard.length !== 64) return;
+        if (incomingBoard.some((v) => !Number.isInteger(v) || v < 0 || v > 4)) return;
+        const curMoves = Number(curGame.moves) || 0;
+        const nextMoves = Number(payload.moves) || 0;
+        if (nextMoves < curMoves) return; // защита от отката состояния
+        const updatedGame = {
+          ...curGame,
+          blackPk: curGame.blackPk || payload.blackPk || '',
+          board: incomingBoard,
+          turn: payload.turn === 'black' ? 'black' : 'white',
+          winner: ['white', 'black', 'draw'].includes(payload.winner) ? payload.winner : '',
+          chainFrom: Number.isInteger(payload.chainFrom) ? payload.chainFrom : -1,
+          moves: nextMoves,
+          lastCapturePly: Number(payload.lastCapturePly) || 0,
+          lastFrom: Number.isInteger(payload.lastFrom) ? payload.lastFrom : -1,
+          lastTo: Number.isInteger(payload.lastTo) ? payload.lastTo : -1
+        };
+        await S.updateMessage(target.id, { game: updatedGame });
+        if (state.activeChatId === chatId) {
+          await reloadActiveMessages(false);
+        }
+        await refreshChatPreview(chatId);
+        if (!isOutgoing && !state.chats[chatId]?.muted) playPopSound();
+      }
+      return;
+    }
+
     if (payload.type === 'reaction' && payload.targetId && payload.emoji) {
       if (payload.id && !S.markActionApplied(payload.id)) return;
       const target = await S.getMessage(payload.targetId);
@@ -17788,7 +17925,27 @@ var qrcode = function() {
   }
 
   function sanitizeIncomingGame(game) {
-    if (!game || typeof game !== 'object' || game.kind !== 'ttt') return null;
+    if (!game || typeof game !== 'object') return null;
+    if (game.kind === 'checkers') {
+      const board = Array.isArray(game.board) && game.board.length === 64
+        ? game.board.map((v) => { const n = Number(v); return Number.isInteger(n) && n >= 0 && n <= 4 ? n : 0; })
+        : chkInitialBoard();
+      const num = (v, d) => { const n = Number(v); return Number.isFinite(n) ? Math.trunc(n) : d; };
+      return {
+        kind: 'checkers',
+        whitePk: String(game.whitePk || '').slice(0, 130),
+        blackPk: String(game.blackPk || '').slice(0, 130),
+        board,
+        turn: game.turn === 'black' ? 'black' : 'white',
+        winner: game.winner === 'white' || game.winner === 'black' || game.winner === 'draw' ? game.winner : '',
+        chainFrom: Number.isInteger(game.chainFrom) ? game.chainFrom : -1,
+        moves: Math.max(0, num(game.moves, 0)),
+        lastCapturePly: Math.max(0, num(game.lastCapturePly, 0)),
+        lastFrom: Number.isInteger(game.lastFrom) ? game.lastFrom : -1,
+        lastTo: Number.isInteger(game.lastTo) ? game.lastTo : -1
+      };
+    }
+    if (game.kind !== 'ttt') return null;
     const board = Array.isArray(game.board) && game.board.length === 9
       ? game.board.map((c) => (c === 'X' || c === 'O' ? c : ''))
       : Array(9).fill('');
@@ -17837,6 +17994,11 @@ var qrcode = function() {
     if (!msg) return '';
     if (msg.gift) return `🎁 Подарок: ${msg.gift.emoji} ${msg.gift.name}`;
     if (msg.starGrant) return `⭐ Чек от Админа: +${msg.starGrant.amount} ⭐`;
+    if (msg.game && msg.game.kind === 'checkers') {
+      return msg.game.winner
+        ? (msg.game.winner === 'draw' ? '🎮 Шашки: Ничья' : `🎮 Шашки: Победа ${msg.game.winner === 'white' ? 'белых' : 'чёрных'}`)
+        : '🎮 Игра «Шашки»';
+    }
     if (msg.game && msg.game.kind === 'ttt') {
       return msg.game.winner
         ? (msg.game.winner === 'draw' ? '🎮 Крестики-нолики: Ничья' : `🎮 Крестики-нолики: Победа ${msg.game.winner}`)
@@ -19163,7 +19325,7 @@ var qrcode = function() {
         avatarColor: (state.contacts[m.senderPk] && state.contacts[m.senderPk].avatarColor) || C.colorForPubkey(m.senderPk)
       };
 
-      const stickerOnly = Boolean(m.media && m.media.kind === 'sticker' && !m.text && !m.gift && !m.starGrant && !(m.game && m.game.kind === 'ttt') && !m.replyTo && !m.forwardedFrom);
+      const stickerOnly = Boolean(m.media && m.media.kind === 'sticker' && !m.text && !m.gift && !m.starGrant && !m.game && !m.replyTo && !m.forwardedFrom);
       let mediaHtml = '';
       if (m.media) {
         if (m.media.kind === 'image') {
@@ -19252,6 +19414,7 @@ var qrcode = function() {
               ${m.gift ? renderGiftCardHtml(m) : ''}
               ${m.starGrant ? renderStarGrantCardHtml(m) : ''}
               ${m.game && m.game.kind === 'ttt' ? renderTttCardHtml(m, chat) : ''}
+              ${m.game && m.game.kind === 'checkers' ? renderCheckersCardHtml(m, chat) : ''}
               ${m.text ? `<div class="msg-text">${formatRichText(m.text)}</div>` : ''}
               <div class="msg-meta">
                 ${m.edited ? '<span>изм.</span>' : ''}
@@ -20867,6 +21030,18 @@ var qrcode = function() {
         return;
       }
 
+      const chkCell = e.target.closest('[data-chk-cell]');
+      if (chkCell) {
+        await handleCheckersCellClick(chkCell.dataset.chkMsg, Number(chkCell.dataset.chkCell));
+        return;
+      }
+
+      const chkRematchBtn = e.target.closest('[data-chk-rematch]');
+      if (chkRematchBtn) {
+        await startCheckersGame(chkRematchBtn.dataset.chkRematch);
+        return;
+      }
+
       const rematchBtn = e.target.closest('[data-ttt-rematch]');
       if (rematchBtn) {
         await startTicTacToeGame(rematchBtn.dataset.tttRematch);
@@ -21013,6 +21188,10 @@ var qrcode = function() {
     el.startTttMenuBtn.addEventListener('click', () => {
       el.attachMenu.classList.add('hidden');
       startTicTacToeGame();
+    });
+    el.startCheckersMenuBtn.addEventListener('click', () => {
+      el.attachMenu.classList.add('hidden');
+      startCheckersGame();
     });
     el.openGiftMenuBtn.addEventListener('click', () => {
       el.attachMenu.classList.add('hidden');
@@ -21778,6 +21957,523 @@ var qrcode = function() {
         if (state.activeChatId === chatId) await reloadActiveMessages(false);
         await refreshChatPreview(chatId);
       }, 360);
+    }
+  }
+
+  // ---------- In-Chat Checkers Mini-Game (Русские шашки) ----------
+
+  /* CHK-LOGIC-BEGIN */
+  const CHK_EMPTY = 0, CHK_WHITE = 1, CHK_WHITE_K = 2, CHK_BLACK = 3, CHK_BLACK_K = 4;
+  const CHK_DIAG = [
+    [-1, -1], [-1, 1], [1, -1], [1, 1]
+  ];
+  const chkRow = (i) => (i >> 3);
+  const chkCol = (i) => (i & 7);
+  const chkIn = (r, c) => r >= 0 && r < 8 && c >= 0 && c < 8;
+  const chkIdx = (r, c) => r * 8 + c;
+  const chkSideOf = (p) => (p === CHK_WHITE || p === CHK_WHITE_K) ? 'white' : (p === CHK_BLACK || p === CHK_BLACK_K) ? 'black' : '';
+  const chkIsKing = (p) => p === CHK_WHITE_K || p === CHK_BLACK_K;
+  const chkIsColorPiece = (color) => (p) => chkSideOf(p) === color;
+  const chkEnemyOf = (color) => (color === 'white' ? 'black' : 'white');
+
+  function chkInitialBoard() {
+    const b = new Array(64).fill(CHK_EMPTY);
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 8; c++) if ((r + c) % 2 === 1) b[chkIdx(r, c)] = CHK_BLACK;
+    for (let r = 5; r < 8; r++) for (let c = 0; c < 8; c++) if ((r + c) % 2 === 1) b[chkIdx(r, c)] = CHK_WHITE;
+    return b;
+  }
+
+  function chkSimpleMovesFrom(board, i) {
+    const p = board[i];
+    const color = chkSideOf(p);
+    if (!color) return [];
+    const out = [];
+    if (chkIsKing(p)) {
+      for (const [dr, dc] of CHK_DIAG) {
+        let r = chkRow(i) + dr, c = chkCol(i) + dc;
+        while (chkIn(r, c) && !board[chkIdx(r, c)]) {
+          out.push({ from: i, to: chkIdx(r, c), capture: -1 });
+          r += dr; c += dc;
+        }
+      }
+      return out;
+    }
+    const fwd = color === 'white' ? [[-1, -1], [-1, 1]] : [[1, -1], [1, 1]];
+    for (const [dr, dc] of fwd) {
+      const r = chkRow(i) + dr, c = chkCol(i) + dc;
+      if (chkIn(r, c) && !board[chkIdx(r, c)]) out.push({ from: i, to: chkIdx(r, c), capture: -1 });
+    }
+    return out;
+  }
+
+  function chkCaptureMovesFrom(board, i) {
+    const p = board[i];
+    const color = chkSideOf(p);
+    if (!color) return [];
+    const enemy = chkIsColorPiece(chkEnemyOf(color));
+    const out = [];
+    if (!chkIsKing(p)) {
+      for (const [dr, dc] of CHK_DIAG) {
+        const r1 = chkRow(i) + dr, c1 = chkCol(i) + dc, r2 = r1 + dr, c2 = c1 + dc;
+        if (!chkIn(r2, c2)) continue;
+        const j = chkIdx(r1, c1), k = chkIdx(r2, c2);
+        if (board[j] && enemy(board[j]) && !board[k]) out.push({ from: i, to: k, capture: j });
+      }
+      return out;
+    }
+    for (const [dr, dc] of CHK_DIAG) {
+      let r = chkRow(i) + dr, c = chkCol(i) + dc, seen = -1;
+      while (chkIn(r, c)) {
+        const k = chkIdx(r, c);
+        if (!board[k]) {
+          if (seen >= 0) out.push({ from: i, to: k, capture: seen });
+        } else if (enemy(board[k])) {
+          if (seen >= 0) break; // две вражеские шашки подряд — взятие невозможно
+          seen = k;
+        } else break; // блокируется своей шашкой
+        r += dr; c += dc;
+      }
+    }
+    return out;
+  }
+
+  // Русское правило: шашка, достигшая дамской линии со взятием, дамка сразу и взятие дальше не продолжает
+  function chkCrowned(p, seg) {
+    const rTo = chkRow(seg.to);
+    return (p === CHK_WHITE && rTo === 0) || (p === CHK_BLACK && rTo === 7);
+  }
+
+  function chkApplySegment(board, seg) {
+    const b = board.slice();
+    const p = b[seg.from];
+    b[seg.from] = CHK_EMPTY;
+    if (seg.capture >= 0) b[seg.capture] = CHK_EMPTY;
+    let np = p;
+    if (chkCrowned(p, seg)) np = (p === CHK_WHITE ? CHK_WHITE_K : CHK_BLACK_K);
+    b[seg.to] = np;
+    return b;
+  }
+
+  function chkAllCaptures(board, color) {
+    const out = [];
+    for (let i = 0; i < 64; i++) if (chkSideOf(board[i]) === color) out.push(...chkCaptureMovesFrom(board, i));
+    return out;
+  }
+
+  function chkAllSimple(board, color) {
+    const out = [];
+    for (let i = 0; i < 64; i++) if (chkSideOf(board[i]) === color) out.push(...chkSimpleMovesFrom(board, i));
+    return out;
+  }
+
+  // Взятие обязательно: если есть хоть одно взятие — простые ходы недоступны
+  function chkLegalMoves(board, color) {
+    const caps = chkAllCaptures(board, color);
+    return caps.length > 0 ? caps : chkAllSimple(board, color);
+  }
+
+  function chkSideLegalMoves(board, color, chainFrom) {
+    if (chainFrom >= 0 && chainFrom < 64 && chkSideOf(board[chainFrom]) === color) {
+      const caps = chkCaptureMovesFrom(board, chainFrom);
+      if (caps.length > 0) return caps;
+    }
+    return chkLegalMoves(board, color);
+  }
+
+  function chkHasAnyMove(board, color) {
+    return chkLegalMoves(board, color).length > 0;
+  }
+
+  function chkCountPieces(board, color) {
+    let n = 0;
+    for (const p of board) if (chkSideOf(p) === color) n++;
+    return n;
+  }
+
+  // Победитель определяется для стороны, чья очередь ходить (после завершения хода)
+  function chkWinner(board, colorToMove, moves, lastCapturePly) {
+    if (chkCountPieces(board, colorToMove) === 0) return chkEnemyOf(colorToMove);
+    if (!chkHasAnyMove(board, colorToMove)) return chkEnemyOf(colorToMove);
+    if (moves - lastCapturePly >= 60) return 'draw';
+    return '';
+  }
+
+  // Относительная оценка: >0 выгодна белым
+  function chkEval(board) {
+    let score = 0;
+    for (let i = 0; i < 64; i++) {
+      const p = board[i];
+      if (!p) continue;
+      const r = chkRow(i);
+      if (p === CHK_WHITE) score += 100 + (5 - r) * 4;
+      else if (p === CHK_WHITE_K) score += 340;
+      else if (p === CHK_BLACK) score -= 100 + r * 4;
+      else if (p === CHK_BLACK_K) score -= 340;
+    }
+    const whiteMobility = chkAllSimple(board, 'white').length + chkAllCaptures(board, 'white').length * 2;
+    const blackMobility = chkAllSimple(board, 'black').length + chkAllCaptures(board, 'black').length * 2;
+    score += (whiteMobility - blackMobility) * 2;
+    return score;
+  }
+
+  const CHK_MATE = 1000000;
+
+  function chkSearch(board, color, depth, alpha, beta, moves, lastCapturePly) {
+    const winner = chkWinner(board, color, moves, lastCapturePly);
+    if (winner) {
+      if (winner === 'draw') return 0;
+      return winner === 'white' ? (CHK_MATE + depth) : -(CHK_MATE + depth);
+    }
+    if (depth <= 0) return chkEval(board);
+    const enemy = chkEnemyOf(color);
+    const legal = chkLegalMoves(board, color);
+    if (color === 'white') {
+      let best = -Infinity;
+      for (const mv of legal) {
+        const nb = chkApplySegment(board, mv);
+        const crowned = chkCrowned(board[mv.from], mv);
+        const nextLast = mv.capture >= 0 ? moves + 1 : lastCapturePly;
+        const chaining = mv.capture >= 0 && !crowned && chkCaptureMovesFrom(nb, mv.to).length > 0;
+        const val = chkSearch(nb, chaining ? color : enemy, depth - 1, alpha, beta, moves + 1, nextLast);
+        if (val > best) best = val;
+        if (best > alpha) alpha = best;
+        if (beta <= alpha) break;
+      }
+      return best;
+    }
+    let best = Infinity;
+    for (const mv of legal) {
+      const nb = chkApplySegment(board, mv);
+      const crowned = chkCrowned(board[mv.from], mv);
+      const nextLast = mv.capture >= 0 ? moves + 1 : lastCapturePly;
+      const chaining = mv.capture >= 0 && !crowned && chkCaptureMovesFrom(nb, mv.to).length > 0;
+      const val = chkSearch(nb, chaining ? color : enemy, depth - 1, alpha, beta, moves + 1, nextLast);
+      if (val < best) best = val;
+      if (best < beta) beta = best;
+      if (beta <= alpha) break;
+    }
+    return best;
+  }
+
+  function chkBotMove(board, color, moves, lastCapturePly) {
+    const legal = chkLegalMoves(board, color);
+    if (!legal.length) return null;
+    const scored = legal.map((mv) => {
+      const nb = chkApplySegment(board, mv);
+      const crowned = chkCrowned(board[mv.from], mv);
+      const enemy = chkEnemyOf(color);
+      const nextLast = mv.capture >= 0 ? moves + 1 : lastCapturePly;
+      const chaining = mv.capture >= 0 && !crowned && chkCaptureMovesFrom(nb, mv.to).length > 0;
+      return { mv, val: chkSearch(nb, chaining ? color : enemy, 2, -Infinity, Infinity, moves + 1, nextLast) };
+    });
+    scored.sort((a, b) => (color === 'white' ? b.val - a.val : a.val - b.val));
+    const bestVal = scored[0].val;
+    const pool = scored.filter((x) => x.val === bestVal);
+    return pool[Math.floor(Math.random() * pool.length)].mv;
+  }
+  /* CHK-LOGIC-END */
+
+  const CHK_BOT_PK = 'PULSEBOT';
+  let chkSelection = null;
+
+  function renderCheckersCardHtml(msg, chat) {
+    const g = msg.game;
+    const myPk = state.identity.pkHex;
+    const isWhite = g.whitePk === myPk;
+    let blackPk = g.blackPk;
+    const openBlack = chat.type === 'group' && !blackPk && !isWhite;
+    const isBlack = blackPk === myPk || openBlack;
+    const myColor = isWhite ? 'white' : (isBlack ? 'black' : '');
+    const botGame = blackPk === CHK_BOT_PK;
+
+    let statusTxt = '';
+    if (g.winner === 'draw') statusTxt = '🤝 Ничья (60 полуходов без взятия)';
+    else if (g.winner === 'white') statusTxt = myColor === 'white' ? '🏆 Вы победили (белые)!' : '🏆 Победили белые';
+    else if (g.winner === 'black') statusTxt = botGame ? '🤖 ИскраБот победил (чёрные)' : (myColor === 'black' ? '🏆 Вы победили (чёрные)!' : '🏆 Победили чёрные');
+    else {
+      const myTurn = g.turn === myColor;
+      if (myTurn) statusTxt = `Ваш ход (${myColor === 'white' ? 'белые' : 'чёрные'})${g.chainFrom >= 0 ? ' — продолжайте взятие!' : ''}`;
+      else if (openBlack && g.turn === 'black') statusTxt = 'Свободное место за чёрных — нажмите на доску';
+      else statusTxt = botGame ? '🤖 ИскраБот думает…' : `Ход ${g.turn === 'white' ? 'белых' : 'чёрных'}…`;
+    }
+
+    const canClick = !g.winner && !!myColor && g.turn === myColor;
+    const sel = (chkSelection && chkSelection.msgId === msg.id) ? chkSelection : null;
+    const selectedFrom = g.chainFrom >= 0 ? g.chainFrom : (sel ? sel.from : -1);
+    let legal = [];
+    if (canClick) legal = chkSideLegalMoves(g.board, myColor, g.chainFrom >= 0 ? g.chainFrom : -1);
+    const targets = new Set();
+    const captureTargets = new Set();
+    if (selectedFrom >= 0) {
+      for (const m of legal) {
+        if (m.from !== selectedFrom) continue;
+        targets.add(m.to);
+        if (m.capture >= 0) captureTargets.add(m.to);
+      }
+    }
+    const movableFroms = new Set(legal.map((m) => m.from));
+    const sideLabel = isWhite ? 'Вы: белые' : (isBlack ? (botGame ? 'Вы: белые · Бот: чёрные' : 'Вы: чёрные') : 'Чёрные: открыто');
+
+    return `
+      <div class="checkers-card">
+        <div class="checkers-header">
+          <span>🎮 Шашки</span>
+          <span>${escapeHtml(sideLabel)}</span>
+        </div>
+        <div class="checkers-status">${statusTxt}</div>
+        <div class="checkers-board" role="grid" aria-label="Доска шашек">
+          ${g.board.map((p, i) => {
+            const r = i >> 3, c = i & 7;
+            const dark = (r + c) % 2 === 1;
+            const isTarget = targets.has(i);
+            const cls = [
+              'chk-cell',
+              dark ? 'dark' : '',
+              isTarget ? 'target' : '',
+              isTarget && captureTargets.has(i) ? 'capture' : '',
+              i === selectedFrom ? 'selected' : '',
+              (i === g.lastFrom || i === g.lastTo) ? 'lastmove' : ''
+            ].filter(Boolean).join(' ');
+            const color = chkSideOf(p);
+            const pieceHtml = p
+              ? `<span class="chk-piece ${color}${chkIsKing(p) ? ' king' : ''}"></span>`
+              : '';
+            const disabled = !canClick || (!isTarget && !(chkSideOf(p) === myColor && movableFroms.has(i))) ? 'disabled' : '';
+            return `<button type="button" class="${cls}" role="gridcell" data-chk-msg="${escapeHtml(msg.id)}" data-chk-cell="${i}" ${disabled} aria-label="Клетка ${r + 1},${c + 1}">${pieceHtml}</button>`;
+          }).join('')}
+        </div>
+        <div class="checkers-foot"><small style="color:var(--text-muted);font-size:11px;">Взятие обязательно · ♛ — дамка</small></div>
+        ${g.winner ? `<button type="button" class="btn btn-secondary sm" data-chk-rematch="${escapeHtml(msg.id)}">🔄 Сыграть ещё</button>` : ''}
+      </div>
+    `;
+  }
+
+  async function startCheckersGame(rematchMsgId = '') {
+    const chatId = state.activeChatId;
+    const chat = state.chats[chatId];
+    if (!chat) return;
+
+    let whitePk = state.identity.pkHex;
+    let blackPk = chat.type === 'dm' ? chat.peerPubkey : (chat.type === 'saved' ? CHK_BOT_PK : '');
+    if (rematchMsgId && chat.type === 'dm') {
+      const prev = await S.getMessage(rematchMsgId);
+      if (prev && prev.game && prev.game.kind === 'checkers' && prev.game.whitePk === state.identity.pkHex) {
+        whitePk = chat.peerPubkey;
+        blackPk = state.identity.pkHex;
+      }
+    }
+
+    const game = {
+      kind: 'checkers',
+      whitePk,
+      blackPk,
+      board: chkInitialBoard(),
+      turn: 'white',
+      winner: '',
+      chainFrom: -1,
+      moves: 0,
+      lastCapturePly: 0,
+      lastFrom: -1,
+      lastTo: -1
+    };
+
+    const msgId = C.randomId(12);
+    const { ts, tsMs, sortKey } = nextOutgoingTiming(chatId);
+    const localMsg = {
+      id: msgId,
+      chatId,
+      senderPk: state.identity.pkHex,
+      senderName: state.identity.name,
+      out: true,
+      text: '',
+      media: null,
+      game,
+      reactions: {},
+      status: 'sending',
+      ts,
+      tsMs,
+      sortKey
+    };
+
+    await S.saveMessage(localMsg);
+    chat.lastMsgTs = ts;
+    chat.lastMsgSortKey = sortKey;
+    chat.lastMsgText = '🎮 Игра «Шашки»';
+    chat.lastMsgSender = 'Вы';
+    chat.lastMsgStatus = 'sending';
+    S.setChats(state.chats);
+    renderChatList();
+    await reloadActiveMessages(true);
+
+    const res = await sendPayloadToChat(chatId, {
+      v: 1,
+      type: 'msg',
+      id: msgId,
+      text: '',
+      game,
+      senderName: state.identity.name,
+      ts,
+      tsMs
+    });
+    await S.updateMessage(msgId, { status: res.ok ? 'sent' : 'queued' });
+    chat.lastMsgStatus = res.ok ? 'sent' : 'queued';
+    S.setChats(state.chats);
+    renderChatList();
+    if (state.activeChatId === chatId) await reloadActiveMessages(false);
+
+    if (blackPk === CHK_BOT_PK) chkScheduleBotMove(chatId, msgId, 600);
+  }
+
+  async function chkApplyMove(msg, chat, myColor, blackPk, seg, notify = true) {
+    const g = msg.game;
+    const board = chkApplySegment(g.board, seg);
+    const movedPiece = g.board[seg.from];
+    const crowned = chkCrowned(movedPiece, seg);
+    const isCapture = seg.capture >= 0;
+    const moves = (g.moves || 0) + 1;
+    const lastCapturePly = isCapture ? moves : (g.lastCapturePly || 0);
+
+    let chainFrom = -1;
+    if (isCapture && !crowned && chkCaptureMovesFrom(board, seg.to).length > 0) {
+      chainFrom = seg.to;
+    }
+    const nextTurn = chainFrom >= 0 ? myColor : chkEnemyOf(myColor);
+    let winner = '';
+    if (chainFrom < 0) {
+      winner = chkWinner(board, nextTurn, moves, lastCapturePly) || '';
+    }
+
+    const updatedGame = {
+      ...g,
+      blackPk,
+      board,
+      turn: nextTurn,
+      winner,
+      chainFrom,
+      moves,
+      lastCapturePly,
+      lastFrom: seg.from,
+      lastTo: seg.to
+    };
+    chkSelection = null;
+
+    await S.updateMessage(msg.id, { game: updatedGame });
+    if (state.activeChatId === msg.chatId) await reloadActiveMessages(false);
+    await refreshChatPreview(msg.chatId);
+
+    if (notify) {
+      const actId = C.randomId(10);
+      S.markActionApplied(actId);
+      await sendPayloadToChat(msg.chatId, {
+        v: 1,
+        type: 'checkers_move',
+        id: actId,
+        targetId: msg.id,
+        blackPk,
+        board,
+        turn: nextTurn,
+        winner,
+        chainFrom,
+        moves,
+        lastCapturePly,
+        lastFrom: seg.from,
+        lastTo: seg.to,
+        senderName: state.identity.name,
+        ts: Math.floor(Date.now() / 1000)
+      });
+    }
+
+    if (blackPk === CHK_BOT_PK && !winner && nextTurn === 'black') {
+      chkScheduleBotMove(msg.chatId, msg.id, chainFrom >= 0 ? 420 : 500);
+    }
+  }
+
+  function chkScheduleBotMove(chatId, msgId, delay) {
+    setTimeout(async () => {
+      const latest = await S.getMessage(msgId);
+      if (!latest || !latest.game || latest.game.kind !== 'checkers') return;
+      const g = latest.game;
+      if (g.winner || g.turn !== 'black') return;
+      const legal = chkSideLegalMoves(g.board, 'black', g.chainFrom >= 0 ? g.chainFrom : -1);
+      if (!legal.length) return;
+      const mv = chkBotMove(g.board, 'black', g.moves || 0, g.lastCapturePly || 0);
+      if (!mv) return;
+      await chkApplyMove(latest, state.chats[chatId], 'black', CHK_BOT_PK, mv, false);
+    }, delay);
+  }
+
+  async function handleCheckersCellClick(msgId, cell) {
+    const chatId = state.activeChatId;
+    const chat = state.chats[chatId];
+    const msg = await S.getMessage(msgId);
+    if (!chat || !msg || !msg.game || msg.game.kind !== 'checkers') return;
+
+    const g = msg.game;
+    if (g.winner) return;
+
+    const myPk = state.identity.pkHex;
+    const isWhite = g.whitePk === myPk;
+    let blackPk = g.blackPk;
+    if (chat.type === 'group' && !blackPk && !isWhite && g.turn === 'black') {
+      blackPk = myPk;
+    }
+    const isBlack = blackPk === myPk;
+    const myColor = isWhite ? 'white' : (isBlack ? 'black' : '');
+    if (!myColor || g.turn !== myColor) {
+      if (chat.type === 'group' && !g.blackPk && !isWhite && g.turn === 'black') {
+        // открытое место за чёрных — присоединяемся без хода
+        const updatedGame = { ...g, blackPk };
+        await S.updateMessage(msg.id, { game: updatedGame });
+        await reloadActiveMessages(false);
+        await refreshChatPreview(chatId);
+        const actId = C.randomId(10);
+        S.markActionApplied(actId);
+        await sendPayloadToChat(chatId, {
+          v: 1, type: 'checkers_move', id: actId, targetId: msg.id, blackPk,
+          board: g.board, turn: g.turn, winner: '', chainFrom: g.chainFrom,
+          moves: g.moves || 0, lastCapturePly: g.lastCapturePly || 0,
+          lastFrom: g.lastFrom ?? -1, lastTo: g.lastTo ?? -1,
+          senderName: state.identity.name, ts: Math.floor(Date.now() / 1000)
+        });
+      }
+      return;
+    }
+
+    const board = g.board;
+    const chainFrom = g.chainFrom >= 0 ? g.chainFrom : -1;
+    const legal = chkSideLegalMoves(board, myColor, chainFrom);
+
+    // Режим продолжения взятия: ходит только та же шашка
+    if (chainFrom >= 0) {
+      const seg = legal.find((m) => m.from === chainFrom && m.to === cell);
+      if (seg) await chkApplyMove(msg, chat, myColor, blackPk, seg);
+      return;
+    }
+
+    const ownMovable = legal.some((m) => m.from === cell);
+    const isOwnPiece = chkSideOf(board[cell]) === myColor && ownMovable;
+
+    if (isOwnPiece) {
+      // Выделить / перевести выделение
+      chkSelection = chkSelection && chkSelection.msgId === msgId && chkSelection.from === cell
+        ? null
+        : { msgId, from: cell };
+      await reloadActiveMessages(false);
+      return;
+    }
+
+    if (chkSelection && chkSelection.msgId === msgId) {
+      const seg = legal.find((m) => m.from === chkSelection.from && m.to === cell);
+      if (seg) {
+        chkSelection = null;
+        await chkApplyMove(msg, chat, myColor, blackPk, seg);
+        return;
+      }
+    }
+
+    if (chkSelection && chkSelection.msgId === msgId) {
+      chkSelection = null;
+      await reloadActiveMessages(false);
     }
   }
 
