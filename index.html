@@ -2147,7 +2147,8 @@ a:hover {
   background: rgba(255, 255, 255, 0.24);
   transform: scale(1.06);
 }
-.call-ctrl-btn.active-off {
+.call-ctrl-btn.active-off,
+.call-ctrl-btn.active-loud {
   background: #ffffff;
   color: #111827;
 }
@@ -2613,6 +2614,179 @@ a:hover {
 }
 .showcase-chip.admin-gift {
   border-color: rgba(56, 189, 248, 0.55);
+}
+
+/* Stars Value: Prestige Avatar Frames, Name Gradients, Chat Wallpapers & Shop */
+.avatar-frame-electric {
+  box-shadow: 0 0 0 2.5px #38bdf8, 0 0 12px rgba(56, 189, 248, 0.75);
+}
+.avatar-frame-holo {
+  box-shadow: 0 0 0 2.5px #c084fc, 0 0 14px rgba(236, 72, 153, 0.65);
+}
+.avatar-frame-royal {
+  box-shadow: 0 0 0 2.5px #fbbf24, 0 0 16px rgba(245, 158, 11, 0.8);
+}
+
+.name-style-neon {
+  background: linear-gradient(90deg, #38bdf8, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  font-weight: 800;
+}
+.name-style-fire {
+  background: linear-gradient(90deg, #fbbf24, #f97316, #ef4444);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  font-weight: 800;
+}
+.name-style-diamond {
+  background: linear-gradient(90deg, #e0f2fe, #67e8f9, #c084fc, #f472b6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  font-weight: 800;
+  filter: drop-shadow(0 0 6px rgba(103, 232, 249, 0.45));
+}
+.chat-item.active .name-style-neon,
+.chat-item.active .name-style-fire,
+.chat-item.active .name-style-diamond {
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  background: none;
+  color: #ffffff !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
+}
+.status-flair-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.rank-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  background: rgba(168, 85, 247, 0.18);
+  color: #c084fc;
+  border: 1px solid rgba(192, 132, 252, 0.4);
+}
+
+.chat-pane[data-chat-bg="cosmos"] {
+  background-color: #070b18;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.16), transparent 42%),
+    radial-gradient(circle at 80% 75%, rgba(168, 85, 247, 0.16), transparent 45%),
+    radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 28px 28px;
+}
+.chat-pane[data-chat-bg="aurora"] {
+  background-color: #07171c;
+  background-image:
+    radial-gradient(circle at 15% 80%, rgba(16, 185, 129, 0.2), transparent 48%),
+    radial-gradient(circle at 85% 20%, rgba(56, 189, 248, 0.18), transparent 45%),
+    radial-gradient(var(--pattern-color) 1.5px, transparent 1.5px);
+  background-size: 100% 100%, 100% 100%, 30px 30px;
+}
+.chat-pane[data-chat-bg="amethyst"] {
+  background-color: #160c24;
+  background-image:
+    radial-gradient(circle at 75% 25%, rgba(236, 72, 153, 0.18), transparent 46%),
+    radial-gradient(circle at 25% 80%, rgba(139, 92, 246, 0.22), transparent 46%),
+    radial-gradient(var(--pattern-color) 1.5px, transparent 1.5px);
+  background-size: 100% 100%, 100% 100%, 32px 32px;
+}
+.chat-pane[data-chat-bg="matrix"] {
+  background-color: #06130b;
+  background-image:
+    radial-gradient(circle at 50% 15%, rgba(34, 197, 94, 0.16), transparent 55%),
+    linear-gradient(to bottom, rgba(34, 197, 94, 0.04) 1px, transparent 1px),
+    linear-gradient(to right, rgba(34, 197, 94, 0.04) 1px, transparent 1px);
+  background-size: 100% 100%, 26px 26px, 26px 26px;
+}
+
+.wallet-tabs {
+  display: flex;
+  gap: 6px;
+}
+.wallet-tab-btn {
+  flex: 1;
+  padding: 7px 8px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 700;
+  background: var(--bg-input);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.wallet-tab-btn.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.shop-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.shop-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+}
+.shop-card.owned {
+  border-color: rgba(74, 222, 128, 0.45);
+}
+.shop-card-info {
+  min-width: 0;
+  flex: 1;
+}
+.shop-card-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.shop-card-desc {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+  line-height: 1.35;
+}
+.gift-recycle-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border-radius: 10px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  font-size: 12px;
+}
+.gift-recycle-btn {
+  padding: 2px 7px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(251, 191, 36, 0.18);
+  color: #f59e0b;
+  border: 1px solid rgba(251, 191, 36, 0.4);
+}
+.gift-recycle-btn:hover {
+  background: rgba(251, 191, 36, 0.3);
 }
 
 /* Hardcore Space Dodge Arcade */
@@ -3113,7 +3287,7 @@ a:hover {
       </div>
 
       <div id="callVideoStage" class="call-video-stage hidden">
-        <video id="remoteVideo" class="call-remote-video" autoplay playsinline></video>
+        <video id="remoteVideo" class="call-remote-video" autoplay muted playsinline></video>
         <video id="localVideo" class="call-local-video" autoplay muted playsinline></video>
         <div id="callVideoCaption" class="call-video-caption">00:00</div>
       </div>
@@ -3123,6 +3297,7 @@ a:hover {
     <div class="call-controls">
       <button id="callAcceptBtn" class="call-ctrl-btn accept hidden" type="button" title="Принять">📞</button>
       <button id="callMuteBtn" class="call-ctrl-btn hidden" type="button" title="Микрофон">🎙️</button>
+      <button id="callVolBtn" class="call-ctrl-btn hidden" type="button" title="Громкость: громко / тихо">🔊</button>
       <button id="callCamBtn" class="call-ctrl-btn hidden" type="button" title="Камера">📷</button>
       <button id="callHangupBtn" class="call-ctrl-btn hangup" type="button" title="Завершить">📵</button>
     </div>
@@ -3179,7 +3354,8 @@ a:hover {
         <h3 id="arcadePanelTitle">🚀 Звёздный уворот</h3>
         <p id="arcadePanelText">Управляйте самолётиком пальцем, мышкой или стрелками. Уворачивайтесь от метеоритов, лазеров и самонаводящихся мин!<br><br><b>Награды за забег:</b><br>15с → +5 ⭐ · 30с → +15 ⭐ · 50с → +35 ⭐ · 75с → +75 ⭐ (+ золотые ⭐ в полёте!)</p>
         <div style="display:flex;flex-direction:column;gap:8px;">
-          <button id="arcadeStartBtn" type="button" class="btn btn-primary">🚀 Полетели!</button>
+          <button id="arcadeStartBtn" type="button" class="btn btn-primary">🚀 Обычный вылет (бесплатно)</button>
+          <button id="arcadeWagerBtn" type="button" class="btn btn-secondary" style="border-color:rgba(251,191,36,0.55);color:#fbbf24;">🔥 Ва-банк: ставка 15 ⭐ → приз 40 ⭐ (40с)</button>
           <button id="arcadeShareBtn" type="button" class="btn btn-secondary hidden">📢 Поделиться рекордом в чат</button>
         </div>
       </div>
@@ -13360,6 +13536,59 @@ var qrcode = function() {
   let db = null;
   const memoryMessages = new Map();
   const memoryChunks = new Map();
+  const chatMaxSortKey = new Map();
+
+  function msgOrderKey(m) {
+    if (!m) return 0;
+    if (typeof m.sortKey === 'number' && Number.isFinite(m.sortKey)) return m.sortKey;
+    if (typeof m.tsMs === 'number' && Number.isFinite(m.tsMs)) return m.tsMs;
+    return (Number(m.ts) || 0) * 1000;
+  }
+
+  function msgRawMs(m) {
+    if (!m) return 0;
+    if (typeof m.tsMs === 'number' && Number.isFinite(m.tsMs)) return m.tsMs;
+    return (Number(m.ts) || 0) * 1000;
+  }
+
+  function compareMsgs(a, b) {
+    return (
+      (msgOrderKey(a) - msgOrderKey(b)) ||
+      (msgRawMs(a) - msgRawMs(b)) ||
+      ((Number(a.ts) || 0) - (Number(b.ts) || 0)) ||
+      String(a.id).localeCompare(String(b.id))
+    );
+  }
+
+  function trackChatOrder(msg) {
+    if (!msg || !msg.chatId) return;
+    const k = msgOrderKey(msg);
+    const prev = chatMaxSortKey.get(msg.chatId) || 0;
+    if (k > prev) chatMaxSortKey.set(msg.chatId, k);
+  }
+
+  function getChatMaxSortKey(chatId) {
+    let maxK = chatMaxSortKey.get(chatId) || 0;
+    for (const m of memoryMessages.values()) {
+      if (m.chatId === chatId) {
+        const k = msgOrderKey(m);
+        if (k > maxK) maxK = k;
+      }
+    }
+    if (maxK > (chatMaxSortKey.get(chatId) || 0)) chatMaxSortKey.set(chatId, maxK);
+    return maxK;
+  }
+
+  function getOtherSenderMaxSortKey(chatId, senderPk) {
+    let maxK = 0;
+    for (const m of memoryMessages.values()) {
+      if (m.chatId === chatId && m.senderPk !== senderPk) {
+        const k = msgOrderKey(m);
+        if (k > maxK) maxK = k;
+      }
+    }
+    return maxK;
+  }
 
   function lsGet(key, fallback = null) {
     try {
@@ -13430,6 +13659,7 @@ var qrcode = function() {
 
   async function saveMessage(msg) {
     memoryMessages.set(msg.id, msg);
+    trackChatOrder(msg);
     if (!db) return msg;
     try {
       await txPromise('messages', 'readwrite', (s) => s.put(msg));
@@ -13442,7 +13672,10 @@ var qrcode = function() {
     if (!db) return null;
     try {
       const m = await txPromise('messages', 'readonly', (s) => s.get(id));
-      if (m) memoryMessages.set(m.id, m);
+      if (m) {
+        memoryMessages.set(m.id, m);
+        trackChatOrder(m);
+      }
       return m || null;
     } catch {
       return null;
@@ -13467,10 +13700,11 @@ var qrcode = function() {
 
   async function getChatMessages(chatId, limit = 600) {
     if (!db) {
-      return Array.from(memoryMessages.values())
+      const list = Array.from(memoryMessages.values())
         .filter((m) => m.chatId === chatId)
-        .sort((a, b) => (a.ts - b.ts) || String(a.id).localeCompare(String(b.id)))
-        .slice(-limit);
+        .sort(compareMsgs);
+      list.forEach((m) => trackChatOrder(m));
+      return list.slice(-limit);
     }
     return new Promise((resolve) => {
       try {
@@ -13478,9 +13712,11 @@ var qrcode = function() {
         const index = tx.objectStore('messages').index('by_chat');
         const req = index.getAll(IDBKeyRange.only(chatId));
         req.onsuccess = () => {
-          const list = (req.result || [])
-            .sort((a, b) => (a.ts - b.ts) || String(a.id).localeCompare(String(b.id)));
-          list.forEach((m) => memoryMessages.set(m.id, m));
+          const list = (req.result || []).sort(compareMsgs);
+          list.forEach((m) => {
+            memoryMessages.set(m.id, m);
+            trackChatOrder(m);
+          });
           resolve(list.slice(-limit));
         };
         req.onerror = () => resolve([]);
@@ -13494,7 +13730,7 @@ var qrcode = function() {
     if (!db) return Array.from(memoryMessages.values());
     try {
       const all = await txPromise('messages', 'readonly', (s) => s.getAll());
-      (all || []).forEach((m) => memoryMessages.set(m.id, m));
+      (all || []).forEach((m) => { memoryMessages.set(m.id, m); trackChatOrder(m); });
       return all || [];
     } catch {
       return Array.from(memoryMessages.values());
@@ -13545,6 +13781,7 @@ var qrcode = function() {
     for (const m of collected) {
       memoryMessages.delete(m.id);
     }
+    chatMaxSortKey.delete(chatId);
     if (!db) return;
     await Promise.all(collected.map((m) => deleteMessage(m.id)));
   }
@@ -13650,6 +13887,7 @@ var qrcode = function() {
       claimedGrants: lsGet('claimed_grants', []),
       receivedGifts: getReceivedGifts(),
       arcadeStats: getArcadeStats(),
+      perks: getPerks(),
       messages
     };
   }
@@ -13669,6 +13907,7 @@ var qrcode = function() {
     if (Array.isArray(data.claimedGrants)) lsSet('claimed_grants', data.claimedGrants.slice(-2000));
     if (Array.isArray(data.receivedGifts)) lsSet('gifts_received', data.receivedGifts.slice(-250));
     if (data.arcadeStats && typeof data.arcadeStats === 'object') setArcadeStats(data.arcadeStats);
+    if (data.perks && typeof data.perks === 'object') setPerks(data.perks);
     if (Array.isArray(data.messages)) {
       for (const msg of data.messages) {
         if (msg && msg.id && msg.chatId) {
@@ -13769,8 +14008,8 @@ var qrcode = function() {
   function getStarsBalance() {
     const raw = lsGet('stars_balance', null);
     if (raw === null || typeof raw === 'undefined') {
-      lsSet('stars_balance', 25);
-      return 25;
+      lsSet('stars_balance', 10);
+      return 10;
     }
     return Math.max(0, Math.floor(Number(raw) || 0));
   }
@@ -13817,10 +14056,15 @@ var qrcode = function() {
 
   function getArcadeStats() {
     const s = lsGet('arcade_stats', {});
+    const today = new Date().toISOString().slice(0, 10);
+    const sameDay = s.dailyDate === today;
     return {
       bestSec: Number(s.bestSec) || 0,
       totalEarned: Number(s.totalEarned) || 0,
-      lastPaidAt: Number(s.lastPaidAt) || 0
+      lastPaidAt: Number(s.lastPaidAt) || 0,
+      dailyDate: today,
+      dailyEarned: sameDay ? Math.max(0, Number(s.dailyEarned) || 0) : 0,
+      wagerWins: Number(s.wagerWins) || 0
     };
   }
 
@@ -13828,6 +14072,46 @@ var qrcode = function() {
     const next = { ...getArcadeStats(), ...patch };
     lsSet('arcade_stats', next);
     return next;
+  }
+
+  function removeReceivedGift(giftId) {
+    if (!giftId) return null;
+    const arr = getReceivedGifts();
+    const idx = arr.findIndex((g) => g.id === giftId);
+    if (idx === -1) return null;
+    const [removed] = arr.splice(idx, 1);
+    lsSet('gifts_received', arr);
+    return removed;
+  }
+
+  function getPerks() {
+    const p = lsGet('user_perks', {});
+    return {
+      unlocked: Array.isArray(p.unlocked) ? p.unlocked : [],
+      nameStyle: typeof p.nameStyle === 'string' ? p.nameStyle : '',
+      avatarFrame: typeof p.avatarFrame === 'string' ? p.avatarFrame : '',
+      statusBadge: typeof p.statusBadge === 'string' ? p.statusBadge : '',
+      chatBg: typeof p.chatBg === 'string' ? p.chatBg : ''
+    };
+  }
+
+  function setPerks(patch) {
+    const next = { ...getPerks(), ...patch };
+    lsSet('user_perks', next);
+    return next;
+  }
+
+  function unlockPerk(perkId) {
+    const cur = getPerks();
+    if (!cur.unlocked.includes(perkId)) {
+      cur.unlocked = [...cur.unlocked, perkId];
+      lsSet('user_perks', cur);
+    }
+    return cur;
+  }
+
+  function hasPerk(perkId) {
+    return getPerks().unlocked.includes(perkId);
   }
 
   async function clearAllData() {
@@ -13842,8 +14126,10 @@ var qrcode = function() {
     lsRemove('claimed_grants');
     lsRemove('gifts_received');
     lsRemove('arcade_stats');
+    lsRemove('user_perks');
     memoryMessages.clear();
     memoryChunks.clear();
+    chatMaxSortKey.clear();
     if (db) {
       try {
         await txPromise('messages', 'readwrite', (s) => s.clear());
@@ -13869,6 +14155,9 @@ var qrcode = function() {
     updateMessage,
     deleteMessage,
     getChatMessages,
+    getChatMaxSortKey,
+    getOtherSenderMaxSortKey,
+    msgOrderKey,
     getAllMessages,
     searchMessages,
     clearChatMessages,
@@ -13894,6 +14183,11 @@ var qrcode = function() {
     addReceivedGift,
     getArcadeStats,
     setArcadeStats,
+    removeReceivedGift,
+    getPerks,
+    setPerks,
+    unlockPerk,
+    hasPerk,
     exportBackup,
     importBackup,
     clearAllData
@@ -14448,6 +14742,7 @@ var qrcode = function() {
       this.disconnectRelay(r);
       r.status = 'connecting';
       r.lastError = '';
+      r.eoseSubs = new Set();
       r.connectStartedAt = performance.now();
       this.emitStatus();
 
@@ -14522,7 +14817,8 @@ var qrcode = function() {
 
           const sub = this.subscriptions.get(subId);
           if (sub && sub.onEvent) {
-            sub.onEvent(ev, r.url);
+            const isLive = Boolean(r.eoseSubs && r.eoseSubs.has(subId));
+            sub.onEvent(ev, r.url, isLive);
           }
         } else if (type === 'OK' && msg.length >= 3) {
           const eventId = msg[1];
@@ -14543,6 +14839,7 @@ var qrcode = function() {
           }
         } else if (type === 'EOSE') {
           const subId = msg[1];
+          if (r.eoseSubs) r.eoseSubs.add(subId);
           if (subId.startsWith('prof_')) {
             setTimeout(() => {
               if (r.ws === ws && ws.readyState === WebSocket.OPEN) {
@@ -14611,6 +14908,7 @@ var qrcode = function() {
     sendReqOnRelay(r, subId, filters) {
       if (!r.ws || r.ws.readyState !== WebSocket.OPEN) return;
       if (!filters || filters.length === 0) return;
+      if (r.eoseSubs) r.eoseSubs.delete(subId);
       try {
         r.ws.send(JSON.stringify(['REQ', subId, ...filters]));
       } catch {}
@@ -15051,6 +15349,7 @@ var qrcode = function() {
       this.connectedAt = 0;
       this.muted = false;
       this.camOff = false;
+      this.loudMode = true;
       this.minimized = false;
       this.ringAudioCtx = null;
       this.ringSoundInt = null;
@@ -15078,6 +15377,7 @@ var qrcode = function() {
           isVideo: this.isVideo,
           muted: this.muted,
           camOff: this.camOff,
+          loudMode: this.loudMode,
           minimized: this.minimized,
           localStream: this.localStream,
           remoteStream: this.remoteStream,
@@ -15106,7 +15406,7 @@ var qrcode = function() {
               const gain = ctx.createGain();
               osc.type = 'sine';
               osc.frequency.setValueAtTime(freq, now + off);
-              gain.gain.setValueAtTime(0.08, now + off);
+              gain.gain.setValueAtTime(this.loudMode ? 0.09 : 0.02, now + off);
               gain.gain.exponentialRampToValueAtTime(0.001, now + off + dur);
               osc.connect(gain);
               gain.connect(ctx.destination);
@@ -15118,7 +15418,7 @@ var qrcode = function() {
             const gain = ctx.createGain();
             osc.type = 'sine';
             osc.frequency.setValueAtTime(425, now);
-            gain.gain.setValueAtTime(0.05, now);
+            gain.gain.setValueAtTime(this.loudMode ? 0.06 : 0.015, now);
             gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
             osc.connect(gain);
             gain.connect(ctx.destination);
@@ -15250,6 +15550,7 @@ var qrcode = function() {
       this.status = 'outgoing';
       this.muted = false;
       this.camOff = false;
+      this.loudMode = true;
       this.minimized = false;
       this.pendingIce = [];
       this.connectedAt = 0;
@@ -15328,6 +15629,12 @@ var qrcode = function() {
       this.emitUi();
     }
 
+    toggleLoudMode() {
+      this.loudMode = !this.loudMode;
+      this.emitUi();
+      return this.loudMode;
+    }
+
     setMinimized(val) {
       this.minimized = Boolean(val);
       this.emitUi();
@@ -15350,6 +15657,7 @@ var qrcode = function() {
         this.isVideo = Boolean(sig.video);
         this.muted = false;
         this.camOff = false;
+        this.loudMode = true;
         this.minimized = false;
         this.pendingIce = [];
         this.connectedAt = 0;
@@ -15487,6 +15795,106 @@ var qrcode = function() {
     { key: 'rocket', emoji: '🚀', name: 'Ракетный буст', price: 1000 }
   ];
   const QUICK_REACTIONS = ['👍', '❤️', '🔥', '😂', '😮', '😢', '🙏'];
+  const SUPER_REACTIONS = ['👑', '💎', '🚀', '⚡', '🥂', '🤯'];
+  const CHAT_WALLPAPERS = [
+    { key: '', label: 'Стандарт', desc: 'Классический узор PulseGram' },
+    { key: 'cosmos', label: '🌌 Космос', desc: 'Звёздная глубина и туманности' },
+    { key: 'aurora', label: '🌠 Северное сияние', desc: 'Изумрудные и небесные переливы' },
+    { key: 'amethyst', label: '🔮 Аметист', desc: 'Фиолетово-розовый неон' },
+    { key: 'matrix', label: '🟩 Киберматрица', desc: 'Тёмная сетка крипто-терминала' }
+  ];
+  const PERK_CATALOG = [
+    { id: 'feat_pins', cat: 'features', slot: 'feature', val: 'pins', icon: '📌', name: 'До 5 закрепов чатов', desc: 'Без апгрейда можно закрепить 1 чат; открывает до 5 закрепов.', price: 65 },
+    { id: 'feat_reactions', cat: 'features', slot: 'feature', val: 'reactions', icon: '🎭', name: 'Супер-реакции', desc: 'Добавляет редкие реакции (👑 💎 🚀 ⚡ 🥂 🤯) к сообщениям.', price: 85 },
+    { id: 'feat_themes', cat: 'features', slot: 'feature', val: 'themes', icon: '🎨', name: 'Премиум-обои чатов', desc: 'Открывает 4 эксклюзивных фона переписки (Космос, Сияние и др.).', price: 95 },
+    { id: 'name_neon', cat: 'styles', slot: 'nameStyle', val: 'neon', icon: '✨', name: 'Ник «Неоновый импульс»', desc: 'Голубо-фиолетовый градиент имени, видимый всем собеседникам.', price: 120 },
+    { id: 'name_fire', cat: 'styles', slot: 'nameStyle', val: 'fire', icon: '🔥', name: 'Ник «Огненная вспышка»', desc: 'Яркий золотисто-огненный градиент имени в чатах.', price: 240 },
+    { id: 'name_diamond', cat: 'styles', slot: 'nameStyle', val: 'diamond', icon: '💎', name: 'Ник «Алмазный премиум»', desc: 'Бриллиантовое сияние ника и аура статуса.', price: 450 },
+    { id: 'frame_electric', cat: 'frames', slot: 'avatarFrame', val: 'electric', icon: '⚡', name: 'Рамка «Электричество»', desc: 'Светящееся неоново-голубое кольцо вокруг вашего аватара.', price: 90 },
+    { id: 'frame_holo', cat: 'frames', slot: 'avatarFrame', val: 'holo', icon: '🌈', name: 'Рамка «Голограмма»', desc: 'Переливающееся голографическое свечение аватара.', price: 200 },
+    { id: 'frame_royal', cat: 'frames', slot: 'avatarFrame', val: 'royal', icon: '👑', name: 'Рамка «Королевское золото»', desc: 'Элитная золотая рамка аватара для топ-участников.', price: 500 },
+    { id: 'badge_shield', cat: 'badges', slot: 'statusBadge', val: '🛡️', icon: '🛡️', name: 'Значок «Закалённый»', desc: 'Отображается рядом с вашим именем у всех собеседников.', price: 70 },
+    { id: 'badge_ace', cat: 'badges', slot: 'statusBadge', val: '☄️', icon: '☄️', name: 'Значок «Пилот-ас»', desc: 'Значок мастера уворота (или бесплатно за 60.0с в хардкоре!).', price: 180 },
+    { id: 'badge_gem', cat: 'badges', slot: 'statusBadge', val: '💎', icon: '💎', name: 'Значок «Магнат»', desc: 'Престижный бриллиант статуса в профиле и чатах.', price: 350 },
+    { id: 'badge_legend', cat: 'badges', slot: 'statusBadge', val: '🚀', icon: '🚀', name: 'Значок «Легенда PulseGram»', desc: 'Редчайший трофей элиты мессенджера.', price: 800 }
+  ];
+
+  function hasFeature(perkId) {
+    return isGlobalAdmin(state.identity?.pkHex) || S.hasPerk(perkId);
+  }
+
+  function maxPinnedChats() {
+    return hasFeature('feat_pins') ? 5 : 1;
+  }
+
+  function getActiveQuickReactions() {
+    return hasFeature('feat_reactions') ? [...QUICK_REACTIONS, ...SUPER_REACTIONS] : QUICK_REACTIONS;
+  }
+
+  function getMyStyleObj() {
+    const p = S.getPerks();
+    const clean = (v, allowed) => (allowed.includes(v) ? v : '');
+    return {
+      nameStyle: clean(p.nameStyle, ['neon', 'fire', 'diamond']),
+      avatarFrame: clean(p.avatarFrame, ['electric', 'holo', 'royal']),
+      statusBadge: clean(p.statusBadge, ['🛡️', '☄️', '💎', '🚀'])
+    };
+  }
+
+  function sanitizeRemoteStyle(styleObj) {
+    if (!styleObj || typeof styleObj !== 'object') return { nameStyle: '', avatarFrame: '', statusBadge: '' };
+    return {
+      nameStyle: ['neon', 'fire', 'diamond'].includes(styleObj.nameStyle) ? styleObj.nameStyle : '',
+      avatarFrame: ['electric', 'holo', 'royal'].includes(styleObj.avatarFrame) ? styleObj.avatarFrame : '',
+      statusBadge: ['🛡️', '☄️', '💎', '🚀'].includes(styleObj.statusBadge) ? styleObj.statusBadge : ''
+    };
+  }
+
+  function getEntityStyle(pk, entity = null) {
+    if (pk && state.identity && pk === state.identity.pkHex) {
+      return getMyStyleObj();
+    }
+    if (entity && entity.style) return sanitizeRemoteStyle(entity.style);
+    if (pk && state.contacts[pk] && state.contacts[pk].style) return sanitizeRemoteStyle(state.contacts[pk].style);
+    return { nameStyle: '', avatarFrame: '', statusBadge: '' };
+  }
+
+  function styledNameHtml(name, pk, chat = null, entity = null) {
+    const st = getEntityStyle(pk, entity);
+    const cls = st.nameStyle ? ` class="name-style-${st.nameStyle}"` : '';
+    const flair = st.statusBadge ? `<span class="status-flair-badge" title="Статус за звёзды">${escapeHtml(st.statusBadge)}</span>` : '';
+    return `<span${cls}>${escapeHtml(name)}</span>${flair}${verifiedBadgeHtml(pk, chat)}`;
+  }
+
+  function getUserRank(pk) {
+    if (isGlobalAdmin(pk)) return { label: '👑 Официальный Админ', score: 99999 };
+    const bal = S.getStarsBalance();
+    const perks = S.getPerks();
+    const arc = S.getArcadeStats();
+    const gifts = S.getReceivedGifts();
+    const perksVal = perks.unlocked.reduce((sum, id) => {
+      const item = PERK_CATALOG.find((x) => x.id === id);
+      return sum + (item ? item.price : 0);
+    }, 0);
+    const giftsVal = gifts.reduce((sum, g) => sum + (Number(g.price) || 0), 0);
+    const score = bal + perksVal + Math.floor(giftsVal * 0.6) + Math.floor((arc.bestSec || 0) * 2) + (arc.wagerWins || 0) * 20;
+    if (score >= 1500) return { label: '👑 Легенда PulseGram', score };
+    if (score >= 700) return { label: '💎 Магнат', score };
+    if (score >= 320) return { label: '🛡️ Мастер', score };
+    if (score >= 140) return { label: '☄️ Пилот', score };
+    if (score >= 45) return { label: '🧭 Искатель', score };
+    return { label: '🌱 Новичок', score };
+  }
+
+  function applyChatWallpaper() {
+    const pane = document.querySelector('.chat-pane');
+    if (!pane) return;
+    const perks = S.getPerks();
+    const allowed = ['cosmos', 'aurora', 'amethyst', 'matrix'];
+    const bg = (hasFeature('feat_themes') && allowed.includes(perks.chatBg)) ? perks.chatBg : '';
+    if (bg) pane.setAttribute('data-chat-bg', bg);
+    else pane.removeAttribute('data-chat-bg');
+  }
 
   function isGlobalAdmin(pk) {
     return Boolean(pk && pk === GLOBAL_ADMIN_PK);
@@ -15544,8 +15952,14 @@ var qrcode = function() {
     infoOpen: false,
     infoSharedTab: 'media',
     startupReadyAt: Date.now() + 3000,
+    sessionOpenedAtSec: Math.floor(Date.now() / 1000),
+    loadedChatOrderSet: new Set(),
     lastTypingSent: 0,
     audioCtx: null,
+    callAudioCtx: null,
+    callGainNode: null,
+    callSourceNode: null,
+    callStreamRef: null,
     activeVoiceAudio: null,
     activeVoiceBtn: null,
     recorder: null,
@@ -15619,6 +16033,7 @@ var qrcode = function() {
     remoteAudio: $('remoteAudio'),
     callAcceptBtn: $('callAcceptBtn'),
     callMuteBtn: $('callMuteBtn'),
+    callVolBtn: $('callVolBtn'),
     callCamBtn: $('callCamBtn'),
     callHangupBtn: $('callHangupBtn'),
     chatSearchToggleBtn: $('chatSearchToggleBtn'),
@@ -15680,6 +16095,7 @@ var qrcode = function() {
     arcadePanelTitle: $('arcadePanelTitle'),
     arcadePanelText: $('arcadePanelText'),
     arcadeStartBtn: $('arcadeStartBtn'),
+    arcadeWagerBtn: $('arcadeWagerBtn'),
     arcadeShareBtn: $('arcadeShareBtn'),
     wbBanner: $('wbBanner'),
     wbBannerText: $('wbBannerText'),
@@ -15819,18 +16235,21 @@ var qrcode = function() {
     return (parts[0][0] + parts[1][0]).toUpperCase();
   }
 
-  function avatarHtml(entity, cls = '') {
+  function avatarHtml(entity, cls = '', pkOverride = '') {
     const photo = entity && entity.avatarPhoto;
     const emoji = entity && entity.avatarEmoji;
     const colors = (entity && entity.avatarColor) || ['#3b82f6', '#1d4ed8'];
+    const pk = pkOverride || (entity && (entity.pkHex || entity.pubkey || entity.peerPubkey)) || '';
+    const st = getEntityStyle(pk, entity);
+    const frameCls = st.avatarFrame ? ` avatar-frame-${st.avatarFrame}` : '';
     const style = `background: linear-gradient(135deg, ${colors[0]}, ${colors[1]})`;
     if (photo && photo.startsWith('data:image/')) {
-      return `<div class="avatar ${cls}" style="${style}"><img src="${escapeHtml(photo)}" alt=""></div>`;
+      return `<div class="avatar ${cls}${frameCls}" style="${style}"><img src="${escapeHtml(photo)}" alt=""></div>`;
     }
     if (emoji) {
-      return `<div class="avatar ${cls}" style="${style}">${escapeHtml(emoji)}</div>`;
+      return `<div class="avatar ${cls}${frameCls}" style="${style}">${escapeHtml(emoji)}</div>`;
     }
-    return `<div class="avatar ${cls}" style="${style}">${escapeHtml(initialsOf(entity && entity.name))}</div>`;
+    return `<div class="avatar ${cls}${frameCls}" style="${style}">${escapeHtml(initialsOf(entity && entity.name))}</div>`;
   }
 
   function toast(msg, ms = 2800) {
@@ -15988,6 +16407,7 @@ var qrcode = function() {
         state.contacts = S.getContacts();
         state.chats = S.getChats();
         applyTheme(state.settings.theme);
+        applyChatWallpaper();
         toast('Резервная копия восстановлена');
         await enterApp();
       } catch (err) {
@@ -16180,7 +16600,8 @@ var qrcode = function() {
       picture: state.identity.avatarPhoto || '',
       pulse: {
         emoji: state.identity.avatarEmoji || '',
-        color: state.identity.avatarColor || C.AVATAR_PALETTE[0]
+        color: state.identity.avatarColor || C.AVATAR_PALETTE[0],
+        style: getMyStyleObj()
       }
     });
     const ev = C.createSignedEvent(state.identity.skHex, {
@@ -16213,6 +16634,7 @@ var qrcode = function() {
     const color = meta.pulse && Array.isArray(meta.pulse.color) && meta.pulse.color.length === 2
       ? meta.pulse.color
       : C.colorForPubkey(ev.pubkey);
+    const styleObj = meta.pulse && meta.pulse.style ? sanitizeRemoteStyle(meta.pulse.style) : null;
 
     if (ev.pubkey === state.identity.pkHex) {
       let changed = false;
@@ -16250,6 +16672,7 @@ var qrcode = function() {
       avatarPhoto: picture || existing.avatarPhoto || '',
       avatarEmoji: emoji || existing.avatarEmoji || '',
       avatarColor: color,
+      style: styleObj || existing.style || null,
       updatedAt: ev.created_at
     };
     S.setContacts(state.contacts);
@@ -16307,7 +16730,7 @@ var qrcode = function() {
     if (changed) S.setChats(state.chats);
   }
 
-  async function handleGiftWrapEvent(wrapEvent) {
+  async function handleGiftWrapEvent(wrapEvent, _relayUrl = '', isLive = false) {
     let rumor;
     try {
       rumor = C.unwrapGiftWrap(wrapEvent, state.identity.skHex);
@@ -16388,11 +16811,12 @@ var qrcode = function() {
       chatId,
       senderPk: rumor.pubkey,
       payload,
-      isOutgoing: isSelfMsg
+      isOutgoing: isSelfMsg,
+      isLive
     });
   }
 
-  async function handleGroupEvent(ev) {
+  async function handleGroupEvent(ev, _relayUrl = '', isLive = false) {
     if (S.isBlocked(ev.pubkey)) return;
     const tTags = (ev.tags || []).filter((t) => t[0] === 't' && t[1]).map((t) => t[1]);
     for (const tag of tTags) {
@@ -16426,7 +16850,8 @@ var qrcode = function() {
         chatId: room.roomId,
         senderPk: ev.pubkey,
         payload,
-        isOutgoing: ev.pubkey === state.identity.pkHex
+        isOutgoing: ev.pubkey === state.identity.pkHex,
+        isLive
       });
       break;
     }
@@ -16524,7 +16949,7 @@ var qrcode = function() {
     }
   }
 
-  async function processDecryptedPayload({ chatId, senderPk, payload, isOutgoing }) {
+  async function processDecryptedPayload({ chatId, senderPk, payload, isOutgoing, isLive = false }) {
     const chat = state.chats[chatId];
     if (!chat) return;
 
@@ -16679,6 +17104,7 @@ var qrcode = function() {
           text: meta.caption || '',
           senderName: payload.senderName,
           ts: meta.ts || payload.ts,
+          tsMs: meta.tsMs || payload.tsMs,
           media: {
             kind: 'file',
             name: meta.name || 'file',
@@ -16687,16 +17113,51 @@ var qrcode = function() {
             dataUrl: `data:${meta.mime || 'application/octet-stream'};base64,${fullB64}`
           }
         };
-        await saveAndDisplayMessage(chatId, senderPk, fullMsgPayload, isOutgoing);
+        await saveAndDisplayMessage(chatId, senderPk, fullMsgPayload, isOutgoing, isLive);
       }
       return;
     }
 
     // Standard message
-    await saveAndDisplayMessage(chatId, senderPk, payload, isOutgoing);
+    await saveAndDisplayMessage(chatId, senderPk, payload, isOutgoing, isLive);
   }
 
-  async function saveAndDisplayMessage(chatId, senderPk, payload, isOutgoing) {
+  function nextOutgoingTiming(chatId) {
+    const nowMs = Date.now();
+    const chat = state.chats[chatId];
+    const chatLastMs = (chat && (chat.lastMsgSortKey || ((chat.lastMsgTs || 0) * 1000))) || 0;
+    const prevMax = Math.max(S.getChatMaxSortKey(chatId), chatLastMs);
+    const sortKey = Math.max(nowMs, prevMax + 1);
+    return { ts: Math.floor(nowMs / 1000), tsMs: nowMs, sortKey };
+  }
+
+  function computeIncomingSortKey(chatId, senderPk, payload, tsSec, isLiveRelay = false) {
+    const rawMs = (typeof payload.tsMs === 'number' && Number.isFinite(payload.tsMs))
+      ? payload.tsMs
+      : (tsSec * 1000);
+    const nowMs = Date.now();
+    const nowSec = Math.floor(nowMs / 1000);
+    const safeRawMs = Math.min(rawMs, nowMs + 120000);
+    const isLive = (isLiveRelay && Math.abs(nowSec - tsSec) <= 900)
+      || (nowMs > state.startupReadyAt && tsSec >= (state.sessionOpenedAtSec - 30) && (nowSec - tsSec) <= 180);
+    if (!isLive) return { tsMs: rawMs, sortKey: safeRawMs };
+
+    const chat = state.chats[chatId];
+    const otherMax = S.getOtherSenderMaxSortKey(chatId, senderPk);
+    const chatHintMax = (chat && chat.lastMsgSender === 'Вы' && senderPk !== state.identity.pkHex)
+      ? (chat.lastMsgSortKey || ((chat.lastMsgTs || 0) * 1000))
+      : 0;
+    const floorMax = Math.max(otherMax, chatHintMax);
+    return { tsMs: rawMs, sortKey: floorMax > 0 ? Math.max(safeRawMs, floorMax + 1) : safeRawMs };
+  }
+
+  async function ensureChatOrderLoaded(chatId) {
+    if (state.loadedChatOrderSet.has(chatId)) return;
+    state.loadedChatOrderSet.add(chatId);
+    await S.getChatMessages(chatId, 200);
+  }
+
+  async function saveAndDisplayMessage(chatId, senderPk, payload, isOutgoing, isLive = false) {
     const msgId = String(payload.id || C.randomId(12));
     if (S.isDeletedId(msgId)) return;
     const existing = await S.getMessage(msgId);
@@ -16708,6 +17169,9 @@ var qrcode = function() {
       return;
     }
 
+    await ensureChatOrderLoaded(chatId);
+    const msgTs = Number(payload.ts) || Math.floor(Date.now() / 1000);
+    const timing = computeIncomingSortKey(chatId, senderPk, payload, msgTs, isLive);
     const msg = {
       id: msgId,
       chatId,
@@ -16724,7 +17188,9 @@ var qrcode = function() {
       reactions: {},
       edited: Boolean(payload.edited),
       status: isOutgoing ? 'sent' : 'received',
-      ts: Number(payload.ts) || Math.floor(Date.now() / 1000)
+      ts: msgTs,
+      tsMs: timing.tsMs,
+      sortKey: timing.sortKey
     };
 
     await S.saveMessage(msg);
@@ -16733,6 +17199,7 @@ var qrcode = function() {
       const myPk = state.identity.pkHex;
       const toPk = msg.gift.toPk;
       if (!isOutgoing && (toPk === myPk || (!toPk && chatId.startsWith('dm:')))) {
+        const fromAdm = isGlobalAdmin(senderPk);
         const added = S.addReceivedGift({
           id: msg.gift.id || msg.id,
           emoji: msg.gift.emoji,
@@ -16741,7 +17208,8 @@ var qrcode = function() {
           note: msg.gift.note,
           fromPk: senderPk,
           fromName: msg.senderName,
-          fromAdmin: isGlobalAdmin(senderPk),
+          fromAdmin: fromAdm,
+          paid: !fromAdm,
           ts: msg.ts
         });
         if (added && Date.now() > state.startupReadyAt) {
@@ -16776,8 +17244,10 @@ var qrcode = function() {
     }
 
     const chat = state.chats[chatId];
-    if (msg.ts >= (chat.lastMsgTs || 0)) {
+    const prevLastKey = chat.lastMsgSortKey || ((chat.lastMsgTs || 0) * 1000);
+    if (msg.sortKey >= prevLastKey) {
       chat.lastMsgTs = msg.ts;
+      chat.lastMsgSortKey = msg.sortKey;
       chat.lastMsgText = previewForMessage(msg);
       chat.lastMsgSender = isOutgoing ? 'Вы' : msg.senderName;
       chat.lastMsgStatus = isOutgoing ? msg.status : '';
@@ -16904,11 +17374,13 @@ var qrcode = function() {
     const last = msgs[msgs.length - 1];
     if (last) {
       chat.lastMsgTs = last.ts;
+      chat.lastMsgSortKey = S.msgOrderKey(last);
       chat.lastMsgText = previewForMessage(last);
       chat.lastMsgSender = last.out ? 'Вы' : last.senderName;
       chat.lastMsgStatus = last.out ? last.status : '';
     } else {
       chat.lastMsgTs = 0;
+      chat.lastMsgSortKey = 0;
       chat.lastMsgText = chat.type === 'saved' ? 'Личные заметки и файлы' : 'Нет сообщений';
       chat.lastMsgSender = '';
       chat.lastMsgStatus = '';
@@ -16969,11 +17441,13 @@ var qrcode = function() {
         })).filter((g) => g.emoji)
       : existing.gifts;
 
+    const nextStyle = payload.senderStyle ? sanitizeRemoteStyle(payload.senderStyle) : (existing.style || null);
     state.contacts[pubkey] = {
       ...existing,
       name: nextName || existing.name || C.npubShort(pubkey),
       avatarEmoji: nextEmoji,
       avatarColor: nextColor,
+      style: nextStyle,
       gifts: giftsPreview
     };
     S.setContacts(state.contacts);
@@ -17098,6 +17572,7 @@ var qrcode = function() {
       senderName: payload.senderName || state.identity.name,
       senderEmoji: state.identity.avatarEmoji || '',
       senderColor: state.identity.avatarColor || C.AVATAR_PALETTE[0],
+      senderStyle: getMyStyleObj(),
       giftsTop: S.getReceivedGifts().slice(-8).map((g) => ({ id: g.id, emoji: g.emoji, name: g.name, fromAdmin: Boolean(g.fromAdmin) }))
     };
 
@@ -17221,7 +17696,7 @@ var qrcode = function() {
     }
 
     const msgId = C.randomId(12);
-    const ts = Math.floor(Date.now() / 1000);
+    const { ts, tsMs, sortKey } = nextOutgoingTiming(chatId);
     const replyTo = state.replyTo ? { ...state.replyTo } : null;
     cancelReplyEdit();
 
@@ -17236,7 +17711,8 @@ var qrcode = function() {
       text,
       replyTo,
       senderName: state.identity.name,
-      ts
+      ts,
+      tsMs
     };
 
     const localMsg = {
@@ -17252,12 +17728,15 @@ var qrcode = function() {
       reactions: {},
       edited: false,
       status: 'sending',
-      ts
+      ts,
+      tsMs,
+      sortKey
     };
 
     await S.saveMessage(localMsg);
     const chat = state.chats[chatId];
     chat.lastMsgTs = ts;
+    chat.lastMsgSortKey = sortKey;
     chat.lastMsgText = text;
     chat.lastMsgSender = 'Вы';
     chat.lastMsgStatus = 'sending';
@@ -17270,7 +17749,7 @@ var qrcode = function() {
     const res = await sendPayloadToChat(chatId, payload, replyTo ? [['e', replyTo.id, '', 'reply']] : []);
     const newStatus = res.ok ? 'sent' : 'queued';
     await S.updateMessage(msgId, { status: newStatus });
-    if (chat.lastMsgTs === ts) {
+    if (chat.lastMsgSortKey === sortKey) {
       chat.lastMsgStatus = newStatus;
       S.setChats(state.chats);
     }
@@ -17304,7 +17783,7 @@ var qrcode = function() {
 
   async function sendSingleMediaMessage(chatId, media, caption = '') {
     const msgId = C.randomId(12);
-    const ts = Math.floor(Date.now() / 1000);
+    const { ts, tsMs, sortKey } = nextOutgoingTiming(chatId);
     const replyTo = state.replyTo ? { ...state.replyTo } : null;
     if (replyTo) cancelReplyEdit();
 
@@ -17316,7 +17795,8 @@ var qrcode = function() {
       replyTo,
       media,
       senderName: state.identity.name,
-      ts
+      ts,
+      tsMs
     };
 
     const localMsg = {
@@ -17332,12 +17812,15 @@ var qrcode = function() {
       reactions: {},
       edited: false,
       status: 'sending',
-      ts
+      ts,
+      tsMs,
+      sortKey
     };
 
     await S.saveMessage(localMsg);
     const chat = state.chats[chatId];
     chat.lastMsgTs = ts;
+    chat.lastMsgSortKey = sortKey;
     chat.lastMsgText = previewForMessage(localMsg);
     chat.lastMsgSender = 'Вы';
     chat.lastMsgStatus = 'sending';
@@ -17349,7 +17832,7 @@ var qrcode = function() {
     const res = await sendPayloadToChat(chatId, payload);
     const newStatus = res.ok ? 'sent' : 'queued';
     await S.updateMessage(msgId, { status: newStatus });
-    if (chat.lastMsgTs === ts) {
+    if (chat.lastMsgSortKey === sortKey) {
       chat.lastMsgStatus = newStatus;
       S.setChats(state.chats);
     }
@@ -17385,7 +17868,7 @@ var qrcode = function() {
       const totalChunks = Math.ceil(fullB64.length / chunkLen);
       const transferId = C.randomId(10);
       const msgId = C.randomId(12);
-      const ts = Math.floor(Date.now() / 1000);
+      const { ts, tsMs, sortKey } = nextOutgoingTiming(chatId);
       const mime = file.type || 'application/octet-stream';
       const dataUrl = `data:${mime};base64,${fullB64}`;
 
@@ -17399,9 +17882,12 @@ var qrcode = function() {
         media: { kind: 'file', name: file.name, mime, size: file.size, dataUrl },
         reactions: {},
         status: 'sending',
-        ts
+        ts,
+        tsMs,
+        sortKey
       });
       chat.lastMsgTs = ts;
+      chat.lastMsgSortKey = sortKey;
       chat.lastMsgText = `📄 ${file.name}`;
       chat.lastMsgSender = 'Вы';
       chat.lastMsgStatus = 'sending';
@@ -17418,7 +17904,7 @@ var qrcode = function() {
           transferId,
           index: i,
           totalChunks,
-          meta: i === 0 ? { id: msgId, name: file.name, mime, size: file.size, ts } : undefined,
+          meta: i === 0 ? { id: msgId, name: file.name, mime, size: file.size, ts, tsMs } : undefined,
           data: fullB64.slice(i * chunkLen, (i + 1) * chunkLen),
           senderName: state.identity.name,
           ts
@@ -17441,7 +17927,7 @@ var qrcode = function() {
         return;
       }
       const msgId = C.randomId(12);
-      const ts = Math.floor(Date.now() / 1000);
+      const { ts, tsMs, sortKey } = nextOutgoingTiming(chatId);
       const bytes = new Uint8Array(await file.arrayBuffer());
       const mime = file.type || 'application/octet-stream';
       const dataUrl = `data:${mime};base64,${C.bytesToBase64(bytes)}`;
@@ -17456,9 +17942,12 @@ var qrcode = function() {
         media: { kind: mime.startsWith('image/') ? 'image' : 'file', name: file.name, mime, size: file.size, dataUrl },
         reactions: {},
         status: 'sending',
-        ts
+        ts,
+        tsMs,
+        sortKey
       });
       chat.lastMsgTs = ts;
+      chat.lastMsgSortKey = sortKey;
       chat.lastMsgText = `📄 ${file.name}`;
       chat.lastMsgSender = 'Вы';
       chat.lastMsgStatus = 'sending';
@@ -17716,7 +18205,7 @@ var qrcode = function() {
         const targetChatId = btn.dataset.fwdId;
         closeModal();
         const fwdId = C.randomId(12);
-        const ts = Math.floor(Date.now() / 1000);
+        const { ts, tsMs, sortKey } = nextOutgoingTiming(targetChatId);
         const fwdFrom = msg.out ? state.identity.name : msg.senderName;
         const payload = {
           v: 1,
@@ -17726,7 +18215,8 @@ var qrcode = function() {
           media: msg.media || null,
           forwardedFrom: fwdFrom,
           senderName: state.identity.name,
-          ts
+          ts,
+          tsMs
         };
         await S.saveMessage({
           id: fwdId,
@@ -17739,10 +18229,13 @@ var qrcode = function() {
           forwardedFrom: fwdFrom,
           reactions: {},
           status: 'sending',
-          ts
+          ts,
+          tsMs,
+          sortKey
         });
         const targetChat = state.chats[targetChatId];
         targetChat.lastMsgTs = ts;
+        targetChat.lastMsgSortKey = sortKey;
         targetChat.lastMsgText = previewForMessage(msg);
         targetChat.lastMsgSender = 'Вы';
         targetChat.lastMsgStatus = 'sending';
@@ -17766,7 +18259,7 @@ var qrcode = function() {
       const ca = state.chats[a];
       const cb = state.chats[b];
       if (Boolean(ca.pinned) !== Boolean(cb.pinned)) return ca.pinned ? -1 : 1;
-      return (cb.lastMsgTs || 0) - (ca.lastMsgTs || 0);
+      return (cb.lastMsgSortKey || ((cb.lastMsgTs || 0) * 1000)) - (ca.lastMsgSortKey || ((ca.lastMsgTs || 0) * 1000));
     });
   }
 
@@ -17815,8 +18308,9 @@ var qrcode = function() {
               <div class="chat-item-top">
                 <div class="chat-item-name">
                   ${c.type === 'group' ? '<span title="Группа">👥</span>' : ''}
-                  <span>${escapeHtml(c.title)}</span>
-                  ${c.type === 'dm' ? verifiedBadgeHtml(c.peerPubkey) : (c.type === 'saved' ? verifiedBadgeHtml(state.identity.pkHex) : '')}
+                  ${c.type === 'dm'
+                    ? styledNameHtml(c.title, c.peerPubkey)
+                    : (c.type === 'saved' ? styledNameHtml(c.title, state.identity.pkHex) : `<span>${escapeHtml(c.title)}</span>`)}
                   ${c.muted ? '<span title="Без звука" style="opacity:.6;font-size:12px;">🔕</span>' : ''}
                 </div>
                 <div class="chat-item-time">${statusTicks} ${escapeHtml(formatDateShort(c.lastMsgTs))}</div>
@@ -17908,10 +18402,9 @@ var qrcode = function() {
     el.chatHeaderAvatar.outerHTML = avatarHtml(chat, '');
     // Re-bind reference after outerHTML replacement
     el.chatHeaderAvatar = el.chatHeaderProfile.querySelector('.avatar');
-    const hdrBadge = chat.type === 'dm'
-      ? verifiedBadgeHtml(chat.peerPubkey)
-      : (chat.type === 'saved' ? verifiedBadgeHtml(state.identity.pkHex) : '');
-    el.chatHeaderTitle.innerHTML = `${escapeHtml(chat.title)}${hdrBadge}`;
+    el.chatHeaderTitle.innerHTML = chat.type === 'dm'
+      ? styledNameHtml(chat.title, chat.peerPubkey)
+      : (chat.type === 'saved' ? styledNameHtml(chat.title, state.identity.pkHex) : escapeHtml(chat.title));
 
     const typing = state.typingMap.get(chat.id);
     el.chatHeaderSubtitle.className = 'chat-subtitle';
@@ -17965,6 +18458,7 @@ var qrcode = function() {
 
   async function reloadActiveMessages(scrollToEnd = false) {
     if (!state.activeChatId) return;
+    state.loadedChatOrderSet.add(state.activeChatId);
     state.activeMessages = await S.getChatMessages(state.activeChatId);
     renderMessagesList(scrollToEnd);
     renderPinnedBanner();
@@ -17997,15 +18491,18 @@ var qrcode = function() {
       const prev = msgs[i - 1];
       const next = msgs[i + 1];
 
-      const d = new Date(m.ts * 1000);
+      const orderSec = Math.floor(S.msgOrderKey(m) / 1000);
+      const prevOrderSec = prev ? Math.floor(S.msgOrderKey(prev) / 1000) : 0;
+      const nextOrderSec = next ? Math.floor(S.msgOrderKey(next) / 1000) : 0;
+      const d = new Date(orderSec * 1000);
       const dayKey = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
       if (dayKey !== lastDayKey) {
         lastDayKey = dayKey;
-        html += `<div class="date-divider">${escapeHtml(formatDateDivider(m.ts))}</div>`;
+        html += `<div class="date-divider">${escapeHtml(formatDateDivider(orderSec))}</div>`;
       }
 
-      const samePrev = prev && prev.senderPk === m.senderPk && (m.ts - prev.ts < 300) && sameDay(prev.ts, m.ts);
-      const sameNext = next && next.senderPk === m.senderPk && (next.ts - m.ts < 300) && sameDay(m.ts, next.ts);
+      const samePrev = prev && prev.senderPk === m.senderPk && Math.abs(orderSec - prevOrderSec) < 300 && sameDay(prevOrderSec, orderSec);
+      const sameNext = next && next.senderPk === m.senderPk && Math.abs(nextOrderSec - orderSec) < 300 && sameDay(orderSec, nextOrderSec);
       const isFirst = !samePrev;
       const isLast = !sameNext;
 
@@ -18077,7 +18574,7 @@ var qrcode = function() {
       html += `
         <div class="${rowCls}" data-msg-id="${escapeHtml(m.id)}">
           ${showGroupAvatar
-            ? `<div class="msg-sender-avatar">${isLast ? avatarHtml(senderEntity, 'avatar-sm') : ''}</div>`
+            ? `<div class="msg-sender-avatar">${isLast ? avatarHtml(senderEntity, 'avatar-sm', m.senderPk) : ''}</div>`
             : ''}
           <div class="msg-bubble-col">
             <div class="msg-hover-bar">
@@ -18088,7 +18585,7 @@ var qrcode = function() {
             </div>
             <div class="msg-bubble">
               ${showGroupAvatar && isFirst
-                ? `<div class="msg-sender-name" style="color:${escapeHtml(senderColor)}" data-open-dm="${escapeHtml(m.senderPk)}">${escapeHtml(senderEntity.name)}${verifiedBadgeHtml(m.senderPk, chat)}</div>`
+                ? `<div class="msg-sender-name" style="color:${escapeHtml(senderColor)}" data-open-dm="${escapeHtml(m.senderPk)}">${styledNameHtml(senderEntity.name, m.senderPk, chat, senderEntity)}</div>`
                 : ''}
               ${m.forwardedFrom
                 ? `<div class="msg-forwarded">Переслано от ${escapeHtml(m.forwardedFrom)}</div>`
@@ -18245,8 +18742,8 @@ var qrcode = function() {
             const c = state.contacts[pk] || { name: m.name || C.npubShort(pk), avatarColor: C.colorForPubkey(pk) };
             return `
               <div class="member-row" style="cursor:pointer" data-open-dm="${escapeHtml(pk)}">
-                ${avatarHtml(c, 'avatar-sm')}
-                <div style="min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(pk === state.identity.pkHex ? `${state.identity.name} (Вы)` : c.name)}${verifiedBadgeHtml(pk, chat)}</div>
+                ${avatarHtml(c, 'avatar-sm', pk)}
+                <div style="min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${styledNameHtml(pk === state.identity.pkHex ? `${state.identity.name} (Вы)` : c.name, pk, chat, c)}</div>
               </div>
             `;
           }).join('')}
@@ -18329,7 +18826,7 @@ var qrcode = function() {
     if (!state.identity) return;
     el.navAvatar.outerHTML = avatarHtml(state.identity, 'avatar-lg');
     el.navAvatar = el.navDrawer.querySelector('.avatar');
-    el.navUserName.innerHTML = `${escapeHtml(state.identity.name)}${verifiedBadgeHtml(state.identity.pkHex)}`;
+    el.navUserName.innerHTML = styledNameHtml(state.identity.name, state.identity.pkHex);
     el.navCopyNpubBtn.textContent = C.npubShort(state.identity.npub) + ' 📋';
     el.navStarsState.textContent = starsDisplayText(state.identity.pkHex);
     el.navSpamState.textContent = state.settings.strictAntiSpam ? 'Только по ссылке' : 'Открыто';
@@ -18367,8 +18864,9 @@ var qrcode = function() {
     openModal('Мой профиль и ключи', `
       <div class="info-hero">
         <div id="profModalAvatar">${avatarHtml(id, 'avatar-xl')}</div>
+        <div style="font-size:16px;font-weight:800;display:flex;align-items:center;gap:6px;">${styledNameHtml(id.name, id.pkHex)}</div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;">
-          ${isGlobalAdmin(id.pkHex) ? '<span class="admin-role-pill">✓ Официальный Админ</span>' : ''}
+          <span class="rank-pill">${getUserRank(id.pkHex).label}</span>
           <span class="stars-pill">${starsDisplayText(id.pkHex)}</span>
         </div>
         <label class="btn btn-secondary sm file-btn">
@@ -18801,8 +19299,8 @@ var qrcode = function() {
 
   function openMessageContextMenu(msg, x, y) {
     const html = `
-      <div class="ctx-reactions">
-        ${QUICK_REACTIONS.map((em) => `<button type="button" class="ctx-react-btn" data-ctx-react="${em}">${em}</button>`).join('')}
+      <div class="ctx-reactions" style="flex-wrap:wrap;max-width:260px;">
+        ${getActiveQuickReactions().map((em) => `<button type="button" class="ctx-react-btn" data-ctx-react="${em}">${em}</button>`).join('')}
       </div>
       <button type="button" class="menu-item" data-ctx-act="reply">↩️ <span>Ответить</span></button>
       ${msg.out && msg.text && !msg.media ? '<button type="button" class="menu-item" data-ctx-act="edit">✏️ <span>Редактировать</span></button>' : ''}
@@ -18853,6 +19351,13 @@ var qrcode = function() {
         const act = b.dataset.cctx;
         hideContextMenu();
         if (act === 'pin') {
+          if (!chat.pinned) {
+            const pinnedCount = Object.values(state.chats).filter((c) => c.pinned).length;
+            if (pinnedCount >= maxPinnedChats()) {
+              toast(`Лимит закрепов: ${maxPinnedChats()}. Откройте «⭐ Кошелёк и магазин» для увеличения до 5!`);
+              return;
+            }
+          }
           chat.pinned = !chat.pinned;
           S.setChats(state.chats);
           renderChatList();
@@ -19178,6 +19683,11 @@ var qrcode = function() {
     el.callVideoBtn.addEventListener('click', () => initiateActiveCall(true));
     el.callAcceptBtn.addEventListener('click', async () => {
       try {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC && !state.callAudioCtx) state.callAudioCtx = new AC();
+        if (state.callAudioCtx && state.callAudioCtx.state === 'suspended') {
+          state.callAudioCtx.resume().catch(() => {});
+        }
         await CALL.acceptIncoming();
       } catch (err) {
         toast(err.message || 'Нет доступа к микрофону или камере', 4000);
@@ -19186,6 +19696,17 @@ var qrcode = function() {
     });
     el.callHangupBtn.addEventListener('click', () => CALL.hangup());
     el.callMuteBtn.addEventListener('click', () => CALL.toggleMute());
+    el.callVolBtn.addEventListener('click', async () => {
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC && !state.callAudioCtx) state.callAudioCtx = new AC();
+        if (state.callAudioCtx && state.callAudioCtx.state === 'suspended') {
+          await state.callAudioCtx.resume();
+        }
+      } catch {}
+      const loud = CALL.toggleLoudMode();
+      toast(loud ? '🔊 Громкая связь (громко)' : '🔈 Тихий режим (тихо)', 1800);
+    });
     el.callCamBtn.addEventListener('click', () => CALL.toggleCam());
     el.callMinimizeBtn.addEventListener('click', () => CALL.setMinimized(true));
     el.callMiniExpandBtn.addEventListener('click', (e) => {
@@ -19231,6 +19752,13 @@ var qrcode = function() {
       if (!chat) return;
       const act = btn.dataset.chatAction;
       if (act === 'pin') {
+        if (!chat.pinned) {
+          const pinnedCount = Object.values(state.chats).filter((c) => c.pinned).length;
+          if (pinnedCount >= maxPinnedChats()) {
+            toast(`Лимит закрепов: ${maxPinnedChats()}. Увеличьте лимит в «⭐ Кошелёк и магазин»!`);
+            return;
+          }
+        }
         chat.pinned = !chat.pinned;
         S.setChats(state.chats);
         renderChatList();
@@ -19625,6 +20153,82 @@ var qrcode = function() {
     }
   }
 
+  function cleanupCallAudioPipeline() {
+    if (state.callSourceNode) {
+      try { state.callSourceNode.disconnect(); } catch {}
+      state.callSourceNode = null;
+    }
+    if (state.callAudioCtx) {
+      try { state.callAudioCtx.close(); } catch {}
+      state.callAudioCtx = null;
+    }
+    state.callGainNode = null;
+    state.callStreamRef = null;
+  }
+
+  function applyCallVolumeState(remoteStream, loudMode) {
+    const targetVol = loudMode ? 1.0 : 0.22;
+    const targetGain = loudMode ? 1.75 : 0.22;
+    el.remoteVideo.muted = true;
+    el.remoteAudio.volume = targetVol;
+
+    if (remoteStream && remoteStream.getAudioTracks().length > 0) {
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) {
+          if (!state.callAudioCtx) {
+            state.callAudioCtx = new AC();
+          }
+          if (state.callStreamRef !== remoteStream) {
+            if (state.callSourceNode) {
+              try { state.callSourceNode.disconnect(); } catch {}
+            }
+            const srcNode = state.callAudioCtx.createMediaStreamSource(remoteStream);
+            const comp = state.callAudioCtx.createDynamicsCompressor();
+            const gain = state.callAudioCtx.createGain();
+            srcNode.connect(comp);
+            comp.connect(gain);
+            gain.connect(state.callAudioCtx.destination);
+            state.callSourceNode = srcNode;
+            state.callGainNode = gain;
+            state.callStreamRef = remoteStream;
+          }
+          if (state.callGainNode) {
+            state.callGainNode.gain.value = targetGain;
+          }
+          if (state.callAudioCtx.state === 'suspended') {
+            state.callAudioCtx.resume().then(() => {
+              if (state.callAudioCtx && state.callAudioCtx.state === 'running' && state.callGainNode) {
+                const loudNow = window.PulseCall ? window.PulseCall.loudMode !== false : loudMode;
+                state.callGainNode.gain.value = loudNow ? 1.75 : 0.22;
+                el.remoteAudio.muted = true;
+              }
+            }).catch(() => {});
+          }
+          if (state.callGainNode && state.callAudioCtx.state === 'running') {
+            el.remoteAudio.muted = true;
+          } else {
+            el.remoteAudio.muted = false;
+          }
+        }
+      } catch {
+        el.remoteAudio.muted = false;
+      }
+    }
+
+    // Optional hardware speaker/earpiece routing where browser supports setSinkId
+    if (typeof el.remoteAudio.setSinkId === 'function' && navigator.mediaDevices?.enumerateDevices) {
+      navigator.mediaDevices.enumerateDevices().then((devs) => {
+        const outs = devs.filter((d) => d.kind === 'audiooutput');
+        if (outs.length < 2) return;
+        const match = outs.find((d) => loudMode
+          ? /speaker|громк|динамик/i.test(d.label)
+          : /earpiece|receiver|handset|разговор/i.test(d.label));
+        if (match) el.remoteAudio.setSinkId(match.deviceId).catch(() => {});
+      }).catch(() => {});
+    }
+  }
+
   function renderCallUi(info) {
     if (!info || info.status === 'idle') {
       el.callOverlay.classList.add('hidden');
@@ -19632,6 +20236,8 @@ var qrcode = function() {
       el.remoteVideo.srcObject = null;
       el.localVideo.srcObject = null;
       el.remoteAudio.srcObject = null;
+      el.remoteAudio.muted = false;
+      cleanupCallAudioPipeline();
       return;
     }
 
@@ -19689,17 +20295,24 @@ var qrcode = function() {
         el.remoteAudio.play().catch(() => {});
       }
       if (el.remoteVideo.srcObject !== info.remoteStream) {
+        el.remoteVideo.muted = true;
         el.remoteVideo.srcObject = info.remoteStream;
         el.remoteVideo.play().catch(() => {});
       }
     }
+    applyCallVolumeState(info.remoteStream, info.loudMode !== false);
 
     el.callAcceptBtn.classList.toggle('hidden', info.status !== 'incoming');
     el.callMuteBtn.classList.toggle('hidden', info.status === 'incoming');
+    el.callVolBtn.classList.toggle('hidden', info.status === 'incoming');
     el.callCamBtn.classList.toggle('hidden', info.status === 'incoming' || !info.isVideo);
 
     el.callMuteBtn.classList.toggle('active-off', info.muted);
     el.callMuteBtn.textContent = info.muted ? '🔇' : '🎙️';
+    const isLoud = info.loudMode !== false;
+    el.callVolBtn.classList.toggle('active-loud', isLoud);
+    el.callVolBtn.textContent = isLoud ? '🔊' : '🔈';
+    el.callVolBtn.title = isLoud ? 'Громкость: громко (нажмите для тихого режима)' : 'Громкость: тихо (нажмите для громкого режима)';
     el.callCamBtn.classList.toggle('active-off', info.camOff);
     el.callCamBtn.textContent = info.camOff ? '🚫' : '📷';
   }
@@ -20093,7 +20706,7 @@ var qrcode = function() {
     };
 
     const msgId = C.randomId(12);
-    const ts = Math.floor(Date.now() / 1000);
+    const { ts, tsMs, sortKey } = nextOutgoingTiming(chatId);
     const localMsg = {
       id: msgId,
       chatId,
@@ -20105,11 +20718,14 @@ var qrcode = function() {
       game,
       reactions: {},
       status: 'sending',
-      ts
+      ts,
+      tsMs,
+      sortKey
     };
 
     await S.saveMessage(localMsg);
     chat.lastMsgTs = ts;
+    chat.lastMsgSortKey = sortKey;
     chat.lastMsgText = '🎮 Игра «Крестики-нолики»';
     chat.lastMsgSender = 'Вы';
     chat.lastMsgStatus = 'sending';
@@ -20124,7 +20740,8 @@ var qrcode = function() {
       text: '',
       game,
       senderName: state.identity.name,
-      ts
+      ts,
+      tsMs
     });
     await S.updateMessage(msgId, { status: res.ok ? 'sent' : 'queued' });
     chat.lastMsgStatus = res.ok ? 'sent' : 'queued';
@@ -20388,52 +21005,219 @@ var qrcode = function() {
     toast(`${targetName} забанен в группе`);
   }
 
-  function openStarsWalletModal() {
+  function openStarsWalletModal(initialTab = 'overview') {
     const myPk = state.identity.pkHex;
     const admin = isGlobalAdmin(myPk);
-    const gifts = S.getReceivedGifts();
-    const arc = S.getArcadeStats();
-    const hasActiveChat = Boolean(state.activeChatId && state.chats[state.activeChatId]);
-    openModal('⭐ Звёзды и подарки', `
-      <div style="padding:14px;border-radius:14px;background:linear-gradient(135deg,rgba(251,191,36,0.18),rgba(56,189,248,0.15));border:1px solid rgba(251,191,36,0.4);text-align:center;">
-        <div style="font-size:12px;color:var(--text-secondary);">Ваш баланс</div>
-        <div style="font-size:28px;font-weight:800;color:#fbbf24;margin:4px 0;">${starsDisplayText(myPk)}</div>
-        ${admin ? '<div class="admin-role-pill">✓ Официальный Админ · безлимит выдачи</div>' : '<div style="font-size:12px;color:var(--text-secondary);">Зарабатывайте ⭐ в мини-игре или получайте чеки от Админа</div>'}
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <button type="button" class="btn btn-primary" id="walletPlayArcadeBtn">🚀 Играть в «Звёздный уворот» (Рекорд: ${arc.bestSec.toFixed(1)}с)</button>
-        ${hasActiveChat ? '<button type="button" class="btn btn-secondary" id="walletSendGiftBtn">🎁 Подарить подарок в текущий чат</button>' : ''}
-        ${admin && hasActiveChat ? '<button type="button" class="btn btn-secondary" id="walletGrantBtn">⭐ Выдать звёзды в текущий чат</button>' : ''}
-      </div>
-      <div class="info-box">
-        <div class="info-box-label">🎁 Моя витрина подарков (${gifts.length})</div>
-        ${gifts.length === 0
-          ? '<div style="font-size:12.5px;color:var(--text-muted);">Подарков пока нет</div>'
-          : `<div class="showcase-grid">${gifts.slice().reverse().slice(0, 18).map((g) => `
-              <span class="showcase-chip${g.fromAdmin ? ' admin-gift' : ''}" title="${escapeHtml(g.fromName || '')}">
-                <span>${escapeHtml(g.emoji)}</span><span>${escapeHtml(g.name)}</span>
-                ${g.fromAdmin ? '<span class="verified-badge admin" style="width:13px;height:13px;font-size:8px;">✓</span>' : ''}
-              </span>`).join('')}</div>`}
-      </div>
-    `);
-    $('walletPlayArcadeBtn').addEventListener('click', () => {
-      closeModal();
-      openArcadeGame();
-    });
-    const gBtn = $('walletSendGiftBtn');
-    if (gBtn) {
-      gBtn.addEventListener('click', () => {
-        closeModal();
-        openSendGiftModal();
+    let activeTab = initialTab;
+
+    const renderWalletBody = () => {
+      const gifts = S.getReceivedGifts();
+      const arc = S.getArcadeStats();
+      const perks = S.getPerks();
+      const rank = getUserRank(myPk);
+      const hasActiveChat = Boolean(state.activeChatId && state.chats[state.activeChatId]);
+      const dailyLeft = Math.max(0, 60 - arc.dailyEarned);
+
+      let tabBody = '';
+      if (activeTab === 'overview') {
+        tabBody = `
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <button type="button" class="btn btn-primary" id="walletPlayArcadeBtn">🚀 Звёздный уворот · Рекорд ${arc.bestSec.toFixed(1)}с (лимит сегодня: ${dailyLeft}/60 ⭐)</button>
+            ${hasActiveChat ? '<button type="button" class="btn btn-secondary" id="walletSendGiftBtn">🎁 Подарить подарок в текущий чат</button>' : ''}
+            ${admin && hasActiveChat ? '<button type="button" class="btn btn-secondary" id="walletGrantBtn">⭐ Выдать звёзды в текущий чат</button>' : ''}
+          </div>
+          <div class="info-box">
+            <div class="info-box-label">⚡ Что дают звёзды в PulseGram</div>
+            <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.5;">
+              • <b>Уникальные стили имени и рамки</b> — их видят все собеседники в чатах и группах<br>
+              • <b>Значки статуса</b> и рост <b>Ранга профиля</b><br>
+              • <b>Супер-реакции</b> (👑 💎 🚀 ⚡ 🥂 🤯), <b>до 5 закрепов</b> и <b>премиум-обои</b><br>
+              • <b>Хардкор-ставка «Ва-банк»</b> в аркаде (15 ⭐ → 40 ⭐)<br>
+              • <b>Обмен подарков</b>: любой обычный подарок можно обменять на <b>50% его цены в ⭐</b>
+            </div>
+          </div>
+          ${hasFeature('feat_themes') ? `
+            <div class="info-box">
+              <div class="info-box-label">🎨 Обои области чата</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                ${CHAT_WALLPAPERS.map((w) => `
+                  <button type="button" class="btn ${perks.chatBg === w.key ? 'btn-primary' : 'btn-secondary'} sm" data-set-bg="${escapeHtml(w.key)}" title="${escapeHtml(w.desc)}">${escapeHtml(w.label)}</button>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+        `;
+      } else if (activeTab === 'shop') {
+        const bal = S.getStarsBalance();
+        tabBody = `
+          <div class="shop-list">
+            ${PERK_CATALOG.map((item) => {
+              const owned = admin || perks.unlocked.includes(item.id);
+              const isEquipped = item.slot !== 'feature' && perks[item.slot] === item.val;
+              let btnHtml = '';
+              if (!owned) {
+                const canBuy = bal >= item.price;
+                btnHtml = `<button type="button" class="btn ${canBuy ? 'btn-primary' : 'btn-secondary'} sm" data-buy-perk="${item.id}">${item.price} ⭐</button>`;
+              } else if (item.slot === 'feature') {
+                btnHtml = `<span class="stars-pill" style="color:#4ade80;border-color:rgba(74,222,128,0.45);background:rgba(74,222,128,0.12);">✓ Активно</span>`;
+              } else {
+                btnHtml = `<button type="button" class="btn ${isEquipped ? 'btn-primary' : 'btn-secondary'} sm" data-equip-slot="${item.slot}" data-equip-val="${escapeHtml(isEquipped ? '' : item.val)}">${isEquipped ? 'Снять' : 'Надеть'}</button>`;
+              }
+              return `
+                <div class="shop-card${owned ? ' owned' : ''}">
+                  <div class="shop-card-info">
+                    <div class="shop-card-title"><span>${item.icon}</span><span>${escapeHtml(item.name)}</span></div>
+                    <div class="shop-card-desc">${escapeHtml(item.desc)}</div>
+                  </div>
+                  ${btnHtml}
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      } else {
+        tabBody = `
+          <div class="info-box">
+            <div class="info-box-label">🎁 Полученные подарки (${gifts.length})</div>
+            ${gifts.length === 0
+              ? '<div style="font-size:12.5px;color:var(--text-muted);">Подарков пока нет — попросите друзей или обменивайтесь ими в чатах!</div>'
+              : `<div class="showcase-grid">${gifts.slice().reverse().map((g) => {
+                  const canCashout = !g.fromAdmin && g.paid !== false && (Number(g.price) || 0) >= 2;
+                  const refund = Math.floor((Number(g.price) || 0) * 0.5);
+                  return `
+                    <span class="gift-recycle-chip${g.fromAdmin ? ' admin-gift' : ''}" title="${escapeHtml(g.fromName || '')}">
+                      <span>${escapeHtml(g.emoji)}</span>
+                      <span>${escapeHtml(g.name)}</span>
+                      ${g.fromAdmin
+                        ? '<span class="verified-badge admin" style="width:14px;height:14px;font-size:8.5px;" title="Коллекционный трофей от Админа">✓</span>'
+                        : (canCashout ? `<button type="button" class="gift-recycle-btn" data-recycle-gift="${escapeHtml(g.id)}" title="Обменять подарок на 50% звёзд">♻️ +${refund}⭐</button>` : '')}
+                    </span>`;
+                }).join('')}</div>`}
+          </div>
+        `;
+      }
+
+      openModal('⭐ Кошелёк, Ранги и Магазин', `
+        <div style="padding:14px;border-radius:14px;background:linear-gradient(135deg,rgba(251,191,36,0.18),rgba(56,189,248,0.15));border:1px solid rgba(251,191,36,0.4);text-align:center;">
+          <div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+            <span class="rank-pill">${rank.label}</span>
+            ${admin ? '<span class="admin-role-pill">✓ Официальный Админ</span>' : `<span class="stars-pill">Рейтинг: ${rank.score}</span>`}
+          </div>
+          <div style="font-size:28px;font-weight:800;color:#fbbf24;margin:2px 0;">${starsDisplayText(myPk)}</div>
+          <div style="font-size:12px;color:var(--text-secondary);">Закрепов: ${Object.values(state.chats).filter((c) => c.pinned).length}/${maxPinnedChats()} · Побед Ва-банк: ${arc.wagerWins}</div>
+        </div>
+        <div class="wallet-tabs">
+          <button type="button" class="wallet-tab-btn${activeTab === 'overview' ? ' active' : ''}" data-wtab="overview">⭐ Обзор</button>
+          <button type="button" class="wallet-tab-btn${activeTab === 'shop' ? ' active' : ''}" data-wtab="shop">🛒 Магазин</button>
+          <button type="button" class="wallet-tab-btn${activeTab === 'gifts' ? ' active' : ''}" data-wtab="gifts">🎁 Витрина (${gifts.length})</button>
+        </div>
+        ${tabBody}
+      `);
+
+      el.modalBody.querySelectorAll('[data-wtab]').forEach((b) => {
+        b.addEventListener('click', () => {
+          activeTab = b.dataset.wtab;
+          renderWalletBody();
+        });
       });
-    }
-    const grBtn = $('walletGrantBtn');
-    if (grBtn) {
-      grBtn.addEventListener('click', () => {
-        closeModal();
-        openAdminGrantStarsModal();
+
+      const playBtn = $('walletPlayArcadeBtn');
+      if (playBtn) {
+        playBtn.addEventListener('click', () => {
+          closeModal();
+          openArcadeGame();
+        });
+      }
+      const gBtn = $('walletSendGiftBtn');
+      if (gBtn) {
+        gBtn.addEventListener('click', () => {
+          closeModal();
+          openSendGiftModal();
+        });
+      }
+      const grBtn = $('walletGrantBtn');
+      if (grBtn) {
+        grBtn.addEventListener('click', () => {
+          closeModal();
+          openAdminGrantStarsModal();
+        });
+      }
+
+      el.modalBody.querySelectorAll('[data-set-bg]').forEach((b) => {
+        b.addEventListener('click', () => {
+          S.setPerks({ chatBg: b.dataset.setBg });
+          applyChatWallpaper();
+          renderWalletBody();
+          toast('Фон чата обновлён');
+        });
       });
-    }
+
+      el.modalBody.querySelectorAll('[data-buy-perk]').forEach((b) => {
+        b.addEventListener('click', async () => {
+          const item = PERK_CATALOG.find((x) => x.id === b.dataset.buyPerk);
+          if (!item) return;
+          if (!admin) {
+            const bal = S.getStarsBalance();
+            if (bal < item.price) {
+              toast(`Нужно ${item.price} ⭐, у вас ${bal} ⭐`);
+              return;
+            }
+            S.addStars(-item.price);
+          }
+          S.unlockPerk(item.id);
+          if (item.slot !== 'feature') {
+            S.setPerks({ [item.slot]: item.val });
+          }
+          applyChatWallpaper();
+          renderNavUser();
+          renderChatList();
+          if (state.activeChatId) {
+            renderChatHeader();
+            renderMessagesList(false);
+          }
+          if (state.settings.publicProfile) publishOwnProfile().catch(() => {});
+          toast(`Разблокировано: ${item.icon} ${item.name}!`);
+          renderWalletBody();
+        });
+      });
+
+      el.modalBody.querySelectorAll('[data-equip-slot]').forEach((b) => {
+        b.addEventListener('click', () => {
+          const slot = b.dataset.equipSlot;
+          const val = b.dataset.equipVal;
+          S.setPerks({ [slot]: val });
+          renderNavUser();
+          renderChatList();
+          if (state.activeChatId) {
+            renderChatHeader();
+            renderMessagesList(false);
+          }
+          if (state.settings.publicProfile) publishOwnProfile().catch(() => {});
+          toast(val ? 'Стиль экипирован и виден собеседникам' : 'Стиль снят');
+          renderWalletBody();
+        });
+      });
+
+      el.modalBody.querySelectorAll('[data-recycle-gift]').forEach((b) => {
+        b.addEventListener('click', () => {
+          const gid = b.dataset.recycleGift;
+          const curGifts = S.getReceivedGifts();
+          const target = curGifts.find((g) => g.id === gid);
+          if (!target || target.fromAdmin || target.paid === false) return;
+          const refund = Math.floor((Number(target.price) || 0) * 0.5);
+          if (!confirm(`Обменять «${target.emoji} ${target.name}» на +${refund} ⭐? Подарок исчезнет с витрины.`)) return;
+          const removed = S.removeReceivedGift(gid);
+          if (removed) {
+            if (!admin) S.addStars(refund);
+            renderNavUser();
+            toast(`♻️ Подарок обменян на +${refund} ⭐!`);
+            renderWalletBody();
+          }
+        });
+      });
+    };
+
+    renderWalletBody();
   }
 
   function openSendGiftModal() {
@@ -20532,7 +21316,7 @@ var qrcode = function() {
         toName
       };
       if (toPk === myPk) {
-        S.addReceivedGift({ ...gift, fromPk: myPk, fromName: state.identity.name, fromAdmin: admin, ts: Math.floor(Date.now() / 1000) });
+        S.addReceivedGift({ ...gift, fromPk: myPk, fromName: state.identity.name, fromAdmin: admin, paid: !admin, ts: Math.floor(Date.now() / 1000) });
       } else {
         const prevC = state.contacts[toPk] || { pubkey: toPk, npub: window.NostrTools.nip19.npubEncode(toPk) };
         const arr = Array.isArray(prevC.gifts) ? [...prevC.gifts] : [];
@@ -20542,7 +21326,7 @@ var qrcode = function() {
       }
 
       const msgId = C.randomId(12);
-      const ts = Math.floor(Date.now() / 1000);
+      const { ts, tsMs, sortKey } = nextOutgoingTiming(chatId);
       await S.saveMessage({
         id: msgId,
         chatId,
@@ -20554,9 +21338,12 @@ var qrcode = function() {
         gift,
         reactions: {},
         status: 'sending',
-        ts
+        ts,
+        tsMs,
+        sortKey
       });
       chat.lastMsgTs = ts;
+      chat.lastMsgSortKey = sortKey;
       chat.lastMsgText = `🎁 Подарок: ${gift.emoji} ${gift.name}`;
       chat.lastMsgSender = 'Вы';
       chat.lastMsgStatus = 'sending';
@@ -20571,7 +21358,8 @@ var qrcode = function() {
         text: '',
         gift,
         senderName: state.identity.name,
-        ts
+        ts,
+        tsMs
       });
       await S.updateMessage(msgId, { status: res.ok ? 'sent' : 'queued' });
       chat.lastMsgStatus = res.ok ? 'sent' : 'queued';
@@ -20642,7 +21430,7 @@ var qrcode = function() {
 
       const starGrant = { id: C.randomId(12), amount, toPk, toName, note };
       const msgId = C.randomId(12);
-      const ts = Math.floor(Date.now() / 1000);
+      const { ts, tsMs, sortKey } = nextOutgoingTiming(chatId);
       await S.saveMessage({
         id: msgId,
         chatId,
@@ -20654,9 +21442,12 @@ var qrcode = function() {
         starGrant,
         reactions: {},
         status: 'sending',
-        ts
+        ts,
+        tsMs,
+        sortKey
       });
       chat.lastMsgTs = ts;
+      chat.lastMsgSortKey = sortKey;
       chat.lastMsgText = `⭐ Чек от Админа: +${amount} ⭐`;
       chat.lastMsgSender = 'Вы';
       chat.lastMsgStatus = 'sending';
@@ -20671,7 +21462,8 @@ var qrcode = function() {
         text: '',
         starGrant,
         senderName: state.identity.name,
-        ts
+        ts,
+        tsMs
       });
       await S.updateMessage(msgId, { status: res.ok ? 'sent' : 'queued' });
       chat.lastMsgStatus = res.ok ? 'sent' : 'queued';
@@ -20682,12 +21474,20 @@ var qrcode = function() {
   }
 
   // ---------- Hardcore Space Dodge Mini-Game ----------
+  const ARCADE_DAILY_CAP = 60;
+  const ARCADE_COOLDOWN_MS = 45000;
+  const ARCADE_WAGER_COST = 15;
+  const ARCADE_WAGER_GOAL_SEC = 40;
+  const ARCADE_WAGER_PRIZE = 40;
+
   const arcade = {
     running: false,
+    wagerMode: false,
     rafId: 0,
     lastTs: 0,
     elapsed: 0,
     bonusStars: 0,
+    nextWallAt: 16,
     px: 220,
     py: 520,
     shieldUntil: 0,
@@ -20701,22 +21501,33 @@ var qrcode = function() {
     lastResultText: ''
   };
 
-  function calcArcadeTimeReward(sec) {
-    if (sec >= 75) return 75;
-    if (sec >= 50) return 35;
-    if (sec >= 30) return 15;
-    if (sec >= 15) return 5;
+  function calcArcadeTimeReward(sec, wagerMode = false) {
+    if (wagerMode) {
+      return sec >= ARCADE_WAGER_GOAL_SEC ? ARCADE_WAGER_PRIZE : 0;
+    }
+    if (sec >= 80) return 30;
+    if (sec >= 55) return 15;
+    if (sec >= 35) return 7;
+    if (sec >= 20) return 3;
     return 0;
   }
 
   function openArcadeGame() {
     const stats = S.getArcadeStats();
+    const dailyLeft = Math.max(0, ARCADE_DAILY_CAP - stats.dailyEarned);
     el.arcadeBestTxt.textContent = `${stats.bestSec.toFixed(1)}с`;
     el.arcadeTimeTxt.textContent = '0.0с';
     el.arcadeRunStarsTxt.textContent = '0';
-    el.arcadePanelTitle.textContent = '🚀 Звёздный уворот';
-    el.arcadePanelText.innerHTML = 'Управляйте самолётиком пальцем, мышкой или стрелками. Уворачивайтесь от метеоритов, лазеров и самонаводящихся мин!<br><br><b>Награды за забег:</b><br>15с → +5 ⭐ · 30с → +15 ⭐ · 50с → +35 ⭐ · 75с → +75 ⭐<br>(Плюс пойманные в полёте золотые ⭐ при выживании ≥ 15с!)';
-    el.arcadeStartBtn.textContent = '🚀 Полетели!';
+    el.arcadePanelTitle.textContent = '🚀 Звёздный уворот (Хардкор)';
+    el.arcadePanelText.innerHTML =
+      `Метеоритные стены, диагональные кометы, двойные лазеры и самонаводящиеся мины!<br><br>` +
+      `<b>Обычный вылет (остаток сегодня: ${dailyLeft}/${ARCADE_DAILY_CAP} ⭐):</b><br>` +
+      `20с → +3 ⭐ · 35с → +7 ⭐ · 55с → +15 ⭐ · 80с → +30 ⭐ (+ до 6 ⭐ в полёте)<br>` +
+      `<i>Бонус: за 60.0с+ выдаётся редкий значок ☄️ Пилот-ас!</i><br><br>` +
+      `<b>🔥 Ва-банк (без лимита дня):</b> ставка <b>${ARCADE_WAGER_COST} ⭐</b> — доживи до <b>${ARCADE_WAGER_GOAL_SEC}с</b> и забери <b>${ARCADE_WAGER_PRIZE} ⭐</b>!`;
+    el.arcadeStartBtn.textContent = '🚀 Обычный вылет (бесплатно)';
+    el.arcadeWagerBtn.classList.remove('hidden');
+    el.arcadeWagerBtn.textContent = `🔥 Ва-банк: ставка ${ARCADE_WAGER_COST} ⭐ → ${ARCADE_WAGER_PRIZE} ⭐ (${ARCADE_WAGER_GOAL_SEC}с)`;
     el.arcadeShareBtn.classList.add('hidden');
     el.arcadePanel.classList.remove('hidden');
     el.arcadeOverlay.classList.remove('hidden');
@@ -20748,7 +21559,7 @@ var qrcode = function() {
       ctx.fill();
       ctx.stroke();
     }
-    ctx.fillStyle = '#38bdf8';
+    ctx.fillStyle = arcade.wagerMode ? '#fbbf24' : '#38bdf8';
     ctx.beginPath();
     ctx.moveTo(0, -16);
     ctx.lineTo(14, 13);
@@ -20767,10 +21578,40 @@ var qrcode = function() {
     ctx.restore();
   }
 
-  function startArcadeRun() {
+  function spawnMeteorWall(diff) {
+    const gapCenter = 60 + Math.random() * 320;
+    const gapHalf = Math.max(38, 54 - arcade.elapsed * 0.18);
+    for (let x = 16; x <= 424; x += 34) {
+      if (Math.abs(x - gapCenter) < gapHalf) continue;
+      arcade.meteors.push({
+        x,
+        y: -22,
+        vx: 0,
+        vy: 195 * Math.min(2.3, diff),
+        r: 13,
+        seeker: false,
+        wall: true
+      });
+    }
+  }
+
+  function startArcadeRun(wagerMode = false) {
+    const admin = isGlobalAdmin(state.identity?.pkHex);
+    if (wagerMode && !admin) {
+      const bal = S.getStarsBalance();
+      if (bal < ARCADE_WAGER_COST) {
+        toast(`Для ставки «Ва-банк» нужно ${ARCADE_WAGER_COST} ⭐ (у вас ${bal} ⭐)`);
+        return;
+      }
+      S.addStars(-ARCADE_WAGER_COST);
+      renderNavUser();
+    }
+
     arcade.running = true;
+    arcade.wagerMode = Boolean(wagerMode);
     arcade.elapsed = 0;
     arcade.bonusStars = 0;
+    arcade.nextWallAt = wagerMode ? 11 : 16;
     arcade.px = 220;
     arcade.py = 520;
     arcade.shieldUntil = 0;
@@ -20790,7 +21631,7 @@ var qrcode = function() {
     arcade.lastTs = now;
     arcade.elapsed += dt;
 
-    const spd = 290;
+    const spd = 295;
     if (arcade.keys.has('ArrowLeft') || arcade.keys.has('KeyA')) arcade.px -= spd * dt;
     if (arcade.keys.has('ArrowRight') || arcade.keys.has('KeyD')) arcade.px += spd * dt;
     if (arcade.keys.has('ArrowUp') || arcade.keys.has('KeyW')) arcade.py -= spd * dt;
@@ -20798,35 +21639,46 @@ var qrcode = function() {
     arcade.px = Math.max(18, Math.min(422, arcade.px));
     arcade.py = Math.max(24, Math.min(600, arcade.py));
 
-    const diff = 1 + arcade.elapsed * 0.055;
-    if (Math.random() < Math.min(0.24, 0.045 + arcade.elapsed * 0.0028)) {
-      const seeker = arcade.elapsed >= 30 && Math.random() < 0.16;
+    const baseMult = arcade.wagerMode ? 1.25 : 1.05;
+    const diff = baseMult + arcade.elapsed * 0.068;
+
+    if (arcade.elapsed >= arcade.nextWallAt) {
+      spawnMeteorWall(diff);
+      arcade.nextWallAt += Math.max(9.5, 16 - arcade.elapsed * 0.09);
+    }
+
+    if (Math.random() < Math.min(0.32, (arcade.wagerMode ? 0.085 : 0.06) + arcade.elapsed * 0.0036)) {
+      const seeker = arcade.elapsed >= (arcade.wagerMode ? 12 : 18) && Math.random() < 0.2;
+      const diag = arcade.elapsed >= 8 && Math.random() < 0.35;
       const r = seeker ? 11 : (10 + Math.random() * 14);
       arcade.meteors.push({
         x: Math.random() * 410 + 15,
         y: -24,
-        vx: (Math.random() - 0.5) * 90 * diff,
-        vy: (170 + Math.random() * 160) * Math.min(2.6, diff),
+        vx: (Math.random() - 0.5) * (diag ? 185 : 100) * Math.min(2.2, diff),
+        vy: (195 + Math.random() * 175) * Math.min(2.9, diff),
         r,
         seeker
       });
     }
-    if (arcade.elapsed >= 15 && Math.random() < (arcade.elapsed >= 45 ? 0.015 : 0.009)) {
-      const horiz = Math.random() < 0.7;
+
+    const laserStart = arcade.wagerMode ? 7 : 10;
+    if (arcade.elapsed >= laserStart && Math.random() < (arcade.elapsed >= 35 ? 0.022 : 0.012)) {
+      const horiz = Math.random() < 0.65;
       arcade.lasers.push({
         horiz,
-        pos: horiz ? (60 + Math.random() * 500) : (40 + Math.random() * 360),
+        pos: horiz ? (55 + Math.random() * 510) : (35 + Math.random() * 370),
         age: 0,
-        warn: 0.9,
-        active: 0.45
+        warn: Math.max(0.65, 0.9 - arcade.elapsed * 0.003),
+        active: 0.48
       });
     }
-    if (Math.random() < 0.018) {
+
+    if (Math.random() < 0.013) {
       arcade.pickups.push({
         kind: Math.random() < 0.14 ? 'shield' : 'star',
         x: 24 + Math.random() * 392,
         y: -16,
-        vy: 145
+        vy: 165
       });
     }
 
@@ -20835,9 +21687,9 @@ var qrcode = function() {
 
     for (let i = arcade.meteors.length - 1; i >= 0; i--) {
       const m = arcade.meteors[i];
-      if (m.seeker && m.y < arcade.py - 30) {
-        m.vx += Math.sign(arcade.px - m.x) * 220 * dt;
-        m.vx = Math.max(-180, Math.min(180, m.vx));
+      if (m.seeker && m.y < arcade.py - 25) {
+        m.vx += Math.sign(arcade.px - m.x) * 260 * dt;
+        m.vx = Math.max(-210, Math.min(210, m.vx));
       }
       m.x += m.vx * dt;
       m.y += m.vy * dt;
@@ -20877,8 +21729,8 @@ var qrcode = function() {
       const dx = p.x - arcade.px;
       const dy = p.y - arcade.py;
       if (dx * dx + dy * dy < 24 * 24) {
-        if (p.kind === 'shield') arcade.shieldUntil = arcade.elapsed + 5;
-        else arcade.bonusStars = Math.min(15, arcade.bonusStars + 1);
+        if (p.kind === 'shield') arcade.shieldUntil = arcade.elapsed + 4;
+        else arcade.bonusStars = Math.min(arcade.wagerMode ? 8 : 6, arcade.bonusStars + 1);
         arcade.pickups.splice(i, 1);
         continue;
       }
@@ -20891,8 +21743,8 @@ var qrcode = function() {
     for (const l of arcade.lasers) {
       const firing = l.age >= l.warn;
       ctx.save();
-      ctx.strokeStyle = firing ? '#ef4444' : 'rgba(251, 191, 36, 0.55)';
-      ctx.lineWidth = firing ? 10 : 2;
+      ctx.strokeStyle = firing ? '#ef4444' : 'rgba(251, 191, 36, 0.6)';
+      ctx.lineWidth = firing ? 11 : 2;
       if (!firing) ctx.setLineDash([8, 8]);
       ctx.beginPath();
       if (l.horiz) {
@@ -20917,17 +21769,21 @@ var qrcode = function() {
       ctx.save();
       ctx.beginPath();
       ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
-      ctx.fillStyle = m.seeker ? '#a855f7' : '#ef4444';
+      ctx.fillStyle = m.seeker ? '#a855f7' : (m.wall ? '#f97316' : '#ef4444');
       ctx.fill();
       ctx.lineWidth = 2;
-      ctx.strokeStyle = m.seeker ? '#f5d0fe' : '#fca5a5';
+      ctx.strokeStyle = m.seeker ? '#f5d0fe' : (m.wall ? '#fed7aa' : '#fca5a5');
       ctx.stroke();
       ctx.restore();
     }
 
     drawArcadePlane(ctx, arcade.px, arcade.py, arcade.elapsed < arcade.shieldUntil);
     el.arcadeTimeTxt.textContent = `${arcade.elapsed.toFixed(1)}с`;
-    el.arcadeRunStarsTxt.textContent = String(calcArcadeTimeReward(arcade.elapsed) + (arcade.elapsed >= 15 ? arcade.bonusStars : 0));
+    const minGoal = arcade.wagerMode ? ARCADE_WAGER_GOAL_SEC : 20;
+    const pot = calcArcadeTimeReward(arcade.elapsed, arcade.wagerMode) + (arcade.elapsed >= minGoal ? arcade.bonusStars : 0);
+    el.arcadeRunStarsTxt.textContent = arcade.wagerMode
+      ? (arcade.elapsed >= ARCADE_WAGER_GOAL_SEC ? `${pot}` : `0 / ${ARCADE_WAGER_GOAL_SEC}с`)
+      : String(pot);
 
     if (hit) {
       finishArcadeRun();
@@ -20939,37 +21795,67 @@ var qrcode = function() {
   function finishArcadeRun() {
     arcade.running = false;
     const stats = S.getArcadeStats();
+    const admin = isGlobalAdmin(state.identity?.pkHex);
     const sec = arcade.elapsed;
     const isNewRecord = sec > stats.bestSec;
     const nextBest = Math.max(stats.bestSec, sec);
-    const baseReward = calcArcadeTimeReward(sec);
-    const totalReward = sec >= 15 ? Math.min(100, baseReward + arcade.bonusStars) : 0;
-
     const nowMs = Date.now();
-    const cooldownLeft = Math.max(0, Math.ceil((10000 - (nowMs - stats.lastPaidAt)) / 1000));
     let granted = 0;
-    if (totalReward > 0 && cooldownLeft === 0) {
-      granted = totalReward;
-      if (!isGlobalAdmin(state.identity.pkHex)) S.addStars(granted);
-      S.setArcadeStats({ bestSec: nextBest, totalEarned: stats.totalEarned + granted, lastPaidAt: nowMs });
-      renderNavUser();
+    let msg = `Вы продержались <b>${sec.toFixed(1)} сек</b>.<br>`;
+
+    if (arcade.wagerMode) {
+      if (sec >= ARCADE_WAGER_GOAL_SEC) {
+        granted = ARCADE_WAGER_PRIZE + arcade.bonusStars;
+        if (!admin) S.addStars(granted);
+        S.setArcadeStats({ bestSec: nextBest, totalEarned: stats.totalEarned + granted, wagerWins: stats.wagerWins + 1 });
+        renderNavUser();
+        msg += `🔥 <b>Победа в «Ва-банк»!</b> Забрано <b style="color:#fbbf24">+${granted} ⭐</b>!`;
+      } else {
+        S.setArcadeStats({ bestSec: nextBest });
+        msg += `❌ Не дотянули до ${ARCADE_WAGER_GOAL_SEC}с — ставка <b>${ARCADE_WAGER_COST} ⭐</b> сгорела.`;
+      }
     } else {
-      S.setArcadeStats({ bestSec: nextBest });
+      const baseReward = calcArcadeTimeReward(sec, false);
+      const totalReward = sec >= 20 ? Math.min(40, baseReward + arcade.bonusStars) : 0;
+      const cooldownLeft = Math.max(0, Math.ceil((ARCADE_COOLDOWN_MS - (nowMs - stats.lastPaidAt)) / 1000));
+      const dailyRoom = Math.max(0, ARCADE_DAILY_CAP - stats.dailyEarned);
+
+      if (sec < 20) {
+        S.setArcadeStats({ bestSec: nextBest });
+        msg += 'В хардкоре нужно продержаться минимум <b>20 секунд</b>, чтобы забрать ⭐!';
+      } else if (cooldownLeft > 0) {
+        S.setArcadeStats({ bestSec: nextBest });
+        msg += `Потенциал ${totalReward} ⭐, но подождите <b>${cooldownLeft}с</b> (защита от фарма).`;
+      } else if (dailyRoom <= 0 && !admin) {
+        S.setArcadeStats({ bestSec: nextBest });
+        msg += `Дневной лимит обычного режима (<b>${ARCADE_DAILY_CAP} ⭐</b>) исчерпан — попробуйте 🔥 Ва-банк!`;
+      } else {
+        granted = admin ? totalReward : Math.min(totalReward, dailyRoom);
+        if (!admin && granted > 0) S.addStars(granted);
+        S.setArcadeStats({
+          bestSec: nextBest,
+          totalEarned: stats.totalEarned + granted,
+          dailyEarned: stats.dailyEarned + granted,
+          lastPaidAt: nowMs
+        });
+        renderNavUser();
+        msg += `Начислено: <b style="color:#fbbf24">+${granted} ⭐</b> (остаток сегодня: ${Math.max(0, dailyRoom - granted)}/${ARCADE_DAILY_CAP} ⭐).`;
+      }
+    }
+
+    if (sec >= 60 && !S.hasPerk('badge_ace')) {
+      S.unlockPerk('badge_ace');
+      S.setPerks({ statusBadge: '☄️' });
+      renderNavUser();
+      msg += `<br><br>🏆 <b>Достижение!</b> Открыт и надет редкий значок <b>☄️ Пилот-ас</b>!`;
     }
 
     el.arcadeBestTxt.textContent = `${nextBest.toFixed(1)}с`;
     el.arcadePanelTitle.textContent = isNewRecord ? '🏆 Новый рекорд!' : '💥 Столкновение!';
-    let msg = `Вы продержались <b>${sec.toFixed(1)} сек</b>.<br>`;
-    if (sec < 15) {
-      msg += 'Нужно продержаться минимум <b>15 секунд</b>, чтобы забрать звёзды!';
-    } else if (cooldownLeft > 0) {
-      msg += `Потенциальная награда ${totalReward} ⭐, но подождите ещё ${cooldownLeft}с между оплачиваемыми забегами.`;
-    } else {
-      msg += `Начислено: <b style="color:#fbbf24">+${granted} ⭐</b>!`;
-    }
     el.arcadePanelText.innerHTML = msg;
-    el.arcadeStartBtn.textContent = '🔄 Сыграть ещё';
-    arcade.lastResultText = `🚀 Мой результат в «Звёздном увороте»: ${sec.toFixed(1)} сек${granted > 0 ? ` (+${granted} ⭐)` : ''}!`;
+    el.arcadeStartBtn.textContent = '🚀 Обычный вылет (бесплатно)';
+    el.arcadeWagerBtn.textContent = `🔥 Ва-банк: ставка ${ARCADE_WAGER_COST} ⭐ → ${ARCADE_WAGER_PRIZE} ⭐ (${ARCADE_WAGER_GOAL_SEC}с)`;
+    arcade.lastResultText = `🚀 Мой результат в хардкоре «Звёздный уворот»: ${sec.toFixed(1)} сек${granted > 0 ? ` (+${granted} ⭐)` : ''}!`;
     if (state.activeChatId && state.chats[state.activeChatId]) {
       el.arcadeShareBtn.classList.remove('hidden');
     }
@@ -20978,7 +21864,8 @@ var qrcode = function() {
 
   function initArcadeControls() {
     el.arcadeCloseBtn.addEventListener('click', closeArcadeGame);
-    el.arcadeStartBtn.addEventListener('click', startArcadeRun);
+    el.arcadeStartBtn.addEventListener('click', () => startArcadeRun(false));
+    el.arcadeWagerBtn.addEventListener('click', () => startArcadeRun(true));
     el.arcadeShareBtn.addEventListener('click', async () => {
       const chatId = state.activeChatId;
       if (!chatId || !arcade.lastResultText) return;
@@ -21018,6 +21905,7 @@ var qrcode = function() {
     window.addEventListener('keydown', (e) => {
       if (!arcade.running) return;
       if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'KeyA', 'KeyD', 'KeyW', 'KeyS'].includes(e.code)) {
+        e.preventDefault();
         arcade.keys.add(e.code);
       }
     });
@@ -21030,6 +21918,7 @@ var qrcode = function() {
 
   async function bootstrap() {
     applyTheme(state.settings.theme);
+    applyChatWallpaper();
     await S.initDB();
     bindEvents();
     initOnboarding();
