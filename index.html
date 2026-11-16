@@ -2867,6 +2867,78 @@ a:hover {
   align-items: center;
   gap: 6px;
 }
+.announce-card {
+  width: 280px;
+  max-width: 100%;
+  border-radius: 14px;
+  padding: 13px 14px;
+  margin-bottom: 4px;
+  background: linear-gradient(150deg, rgba(251, 191, 36, 0.26), rgba(234, 88, 12, 0.16) 55%, rgba(225, 29, 72, 0.12));
+  border: 1px solid rgba(251, 191, 36, 0.6);
+  box-shadow: 0 4px 18px rgba(251, 191, 36, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.announce-card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.announce-crown {
+  font-size: 22px;
+  line-height: 1;
+}
+.announce-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #fbbf24;
+  line-height: 1.3;
+}
+.announce-body {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.announce-foot {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  border-top: 1px solid rgba(251, 191, 36, 0.3);
+  padding-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.perk-grant-card {
+  width: 250px;
+  max-width: 100%;
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 4px;
+  background: linear-gradient(145deg, rgba(168, 85, 247, 0.24), rgba(99, 102, 241, 0.14));
+  border: 1px solid rgba(168, 85, 247, 0.55);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.perk-grant-icon {
+  font-size: 34px;
+  line-height: 1.1;
+  filter: drop-shadow(0 3px 8px rgba(168, 85, 247, 0.45));
+}
+.perk-grant-name {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #d8b4fe;
+}
+.perk-grant-card .gift-sub {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
 .star-grant-amount {
   font-size: 24px;
   font-weight: 800;
@@ -3492,6 +3564,12 @@ a:hover {
                 </button>
                 <button type="button" class="menu-item hidden" id="grantStarsMenuBtn">
                   <span class="menu-ico">⭐</span><span>Выдать звёзды (Админ)</span>
+                </button>
+                <button type="button" class="menu-item hidden" id="announceMenuBtn">
+                  <span class="menu-ico">📢</span><span>Объявление (Админ)</span>
+                </button>
+                <button type="button" class="menu-item hidden" id="perkGrantMenuBtn">
+                  <span class="menu-ico">🎟</span><span>Выдать премиум (Админ)</span>
                 </button>
                 <button type="button" class="menu-item" id="openArcadeMenuBtn">
                   <span class="menu-ico">🚀</span><span>Звёздный уворот (+⭐)</span>
@@ -14387,6 +14465,21 @@ var qrcode = function() {
     return Boolean(grantId && lsGet('claimed_grants', []).includes(grantId));
   }
 
+  function claimPerkGrantOnce(grantId, perkId) {
+    if (!grantId) return { claimed: false };
+    const claimed = lsGet('claimed_perk_grants', []);
+    if (claimed.includes(grantId)) return { claimed: false };
+    claimed.push(grantId);
+    if (claimed.length > 2000) claimed.splice(0, claimed.length - 2000);
+    lsSet('claimed_perk_grants', claimed);
+    unlockPerk(perkId);
+    return { claimed: true };
+  }
+
+  function isPerkGrantClaimed(grantId) {
+    return Boolean(grantId && lsGet('claimed_perk_grants', []).includes(grantId));
+  }
+
   function getReceivedGifts() {
     const arr = lsGet('gifts_received', []);
     return Array.isArray(arr) ? arr : [];
@@ -14543,6 +14636,8 @@ var qrcode = function() {
     addStars,
     claimGrantOnce,
     isGrantClaimed,
+    claimPerkGrantOnce,
+    isPerkGrantClaimed,
     getReceivedGifts,
     addReceivedGift,
     getArcadeStats,
@@ -16502,6 +16597,8 @@ var qrcode = function() {
     startCheckersMenuBtn: $('startCheckersMenuBtn'),
     openGiftMenuBtn: $('openGiftMenuBtn'),
     grantStarsMenuBtn: $('grantStarsMenuBtn'),
+    announceMenuBtn: $('announceMenuBtn'),
+    perkGrantMenuBtn: $('perkGrantMenuBtn'),
     openArcadeMenuBtn: $('openArcadeMenuBtn'),
     arcadeOverlay: $('arcadeOverlay'),
     arcadeCanvas: $('arcadeCanvas'),
@@ -17797,6 +17894,8 @@ var qrcode = function() {
       game: sanitizeIncomingGame(payload.game),
       gift: sanitizeIncomingGift(payload.gift),
       starGrant: sanitizeIncomingGrant(payload.starGrant, senderPk),
+      announce: sanitizeIncomingAnnounce(payload.announce, senderPk),
+      perkGrant: sanitizeIncomingPerkGrant(payload.perkGrant, senderPk),
       reactions: {},
       edited: Boolean(payload.edited),
       status: isOutgoing ? 'sent' : 'received',
@@ -17846,6 +17945,17 @@ var qrcode = function() {
         if (res.claimed) {
           renderNavUser();
           toast(`⭐ Админ начислил вам +${msg.starGrant.amount} ⭐!`);
+        }
+      }
+    }
+
+    if (msg.perkGrant && !isOutgoing && isGlobalAdmin(senderPk)) {
+      const myPk = state.identity.pkHex;
+      if (msg.perkGrant.toPk === myPk) {
+        const res = S.claimPerkGrantOnce(msg.perkGrant.id, msg.perkGrant.perkId);
+        if (res.claimed) {
+          renderNavUser();
+          toast('🎟 Админ выдал вам премиум-перк!');
         }
       }
     }
@@ -17990,10 +18100,42 @@ var qrcode = function() {
     };
   }
 
+  function sanitizeIncomingAnnounce(announce, senderPk) {
+    if (!announce || typeof announce !== 'object') return null;
+    if (!isGlobalAdmin(senderPk)) return null;
+    const body = String(announce.body || '').trim().slice(0, 600);
+    if (!body) return null;
+    return {
+      id: String(announce.id || C.randomId(10)),
+      title: String(announce.title || '').trim().slice(0, 80) || 'Объявление',
+      body
+    };
+  }
+
+  function sanitizeIncomingPerkGrant(grant, senderPk) {
+    if (!grant || typeof grant !== 'object') return null;
+    if (!isGlobalAdmin(senderPk)) return null;
+    const perkId = String(grant.perkId || '');
+    const item = PERK_CATALOG.find((p) => p.id === perkId);
+    if (!item) return null;
+    return {
+      id: String(grant.id || C.randomId(10)),
+      perkId: item.id,
+      toPk: String(grant.toPk || ''),
+      toName: String(grant.toName || '').slice(0, 48),
+      note: String(grant.note || '').slice(0, 120)
+    };
+  }
+
   function previewForMessage(msg) {
     if (!msg) return '';
     if (msg.gift) return `🎁 Подарок: ${msg.gift.emoji} ${msg.gift.name}`;
     if (msg.starGrant) return `⭐ Чек от Админа: +${msg.starGrant.amount} ⭐`;
+    if (msg.announce) return `📢 ${msg.announce.title}: ${String(msg.announce.body).replace(/\s+/g, ' ').slice(0, 80)}`;
+    if (msg.perkGrant) {
+      const item = PERK_CATALOG.find((p) => p.id === msg.perkGrant.perkId);
+      return `🎟 Премиум от Админа: ${item ? item.name : msg.perkGrant.perkId}`;
+    }
     if (msg.game && msg.game.kind === 'checkers') {
       return msg.game.winner
         ? (msg.game.winner === 'draw' ? '🎮 Шашки: Ничья' : `🎮 Шашки: Победа ${msg.game.winner === 'white' ? 'белых' : 'чёрных'}`)
@@ -19325,7 +19467,7 @@ var qrcode = function() {
         avatarColor: (state.contacts[m.senderPk] && state.contacts[m.senderPk].avatarColor) || C.colorForPubkey(m.senderPk)
       };
 
-      const stickerOnly = Boolean(m.media && m.media.kind === 'sticker' && !m.text && !m.gift && !m.starGrant && !m.game && !m.replyTo && !m.forwardedFrom);
+      const stickerOnly = Boolean(m.media && m.media.kind === 'sticker' && !m.text && !m.gift && !m.starGrant && !m.announce && !m.perkGrant && !m.game && !m.replyTo && !m.forwardedFrom);
       let mediaHtml = '';
       if (m.media) {
         if (m.media.kind === 'image') {
@@ -19413,6 +19555,8 @@ var qrcode = function() {
               ${mediaHtml}
               ${m.gift ? renderGiftCardHtml(m) : ''}
               ${m.starGrant ? renderStarGrantCardHtml(m) : ''}
+              ${m.announce ? renderAnnounceCardHtml(m) : ''}
+              ${m.perkGrant ? renderPerkGrantCardHtml(m) : ''}
               ${m.game && m.game.kind === 'ttt' ? renderTttCardHtml(m, chat) : ''}
               ${m.game && m.game.kind === 'checkers' ? renderCheckersCardHtml(m, chat) : ''}
               ${m.text ? `<div class="msg-text">${formatRichText(m.text)}</div>` : ''}
@@ -19646,6 +19790,8 @@ var qrcode = function() {
     el.navSoundState.textContent = state.settings.sound ? 'Вкл' : 'Выкл';
     el.navThemeState.textContent = state.settings.theme === 'dark' ? 'Тёмная' : 'Светлая';
     el.grantStarsMenuBtn.classList.toggle('hidden', !isGlobalAdmin(state.identity.pkHex));
+    if (el.announceMenuBtn) el.announceMenuBtn.classList.toggle('hidden', !isGlobalAdmin(state.identity.pkHex));
+    if (el.perkGrantMenuBtn) el.perkGrantMenuBtn.classList.toggle('hidden', !isGlobalAdmin(state.identity.pkHex));
   }
 
   function openNavDrawer() {
@@ -21062,6 +21208,21 @@ var qrcode = function() {
         }
         return;
       }
+
+      const claimPerkBtn = e.target.closest('[data-claim-perk]');
+      if (claimPerkBtn) {
+        const grantId = claimPerkBtn.dataset.claimPerk;
+        const perkId = claimPerkBtn.dataset.perkId;
+        const res = S.claimPerkGrantOnce(grantId, perkId);
+        if (res.claimed) {
+          renderNavUser();
+          await reloadActiveMessages(false);
+          toast('🎟 Премиум-перк активирован!');
+        } else {
+          toast('Вы уже забрали этот перк');
+        }
+        return;
+      }
     });
 
     el.messagesList.addEventListener('contextmenu', (e) => {
@@ -21200,6 +21361,14 @@ var qrcode = function() {
     el.grantStarsMenuBtn.addEventListener('click', () => {
       el.attachMenu.classList.add('hidden');
       openAdminGrantStarsModal();
+    });
+    el.announceMenuBtn.addEventListener('click', () => {
+      el.attachMenu.classList.add('hidden');
+      openAdminAnnounceModal();
+    });
+    el.perkGrantMenuBtn.addEventListener('click', () => {
+      el.attachMenu.classList.add('hidden');
+      openAdminPerkGrantModal();
     });
     el.openArcadeMenuBtn.addEventListener('click', () => {
       el.attachMenu.classList.add('hidden');
@@ -22613,6 +22782,54 @@ var qrcode = function() {
     `;
   }
 
+  function renderAnnounceCardHtml(msg) {
+    const a = msg.announce;
+    if (!a) return '';
+    return `
+      <div class="announce-card">
+        <div class="announce-card-head">
+          <div class="announce-crown">📢</div>
+          <div class="announce-title">${escapeHtml(a.title)}</div>
+        </div>
+        <div class="announce-body">${escapeHtml(a.body)}</div>
+        <div class="announce-foot"><span class="admin-role-pill">✓ Официальное объявление</span></div>
+      </div>
+    `;
+  }
+
+  function renderPerkGrantCardHtml(msg) {
+    const gr = msg.perkGrant;
+    if (!gr) return '';
+    const item = PERK_CATALOG.find((p) => p.id === gr.perkId);
+    const icon = item ? item.icon : '🎟';
+    const name = item ? item.name : gr.perkId;
+    const myPk = state.identity.pkHex;
+    const isMine = gr.toPk === myPk;
+    const isAll = gr.toPk === 'ALL';
+    const claimed = S.isPerkGrantClaimed(gr.id);
+    let actionHtml = '';
+    if (msg.out) {
+      actionHtml = `<div class="gift-sub">Выдано ${isAll ? 'всем участникам' : escapeHtml(gr.toName || 'получателю')}</div>`;
+    } else if (isMine) {
+      actionHtml = `<div class="gift-sub" style="color:#22c55e;font-weight:700;">✅ Активировано в вашем профиле</div>`;
+    } else if (isAll) {
+      actionHtml = claimed
+        ? `<div class="gift-sub" style="color:#22c55e;font-weight:700;">✅ Вы уже забрали</div>`
+        : `<button type="button" class="btn btn-primary sm" data-claim-perk="${escapeHtml(gr.id)}" data-perk-id="${escapeHtml(gr.perkId)}">🎟 Забрать перк</button>`;
+    } else {
+      actionHtml = `<div class="gift-sub">Назначение: ${escapeHtml((gr.toName && !isCipherOrRawIdName(gr.toName)) ? gr.toName : contactName(gr.toPk))}</div>`;
+    }
+    return `
+      <div class="perk-grant-card">
+        <div class="gift-sub"><span class="admin-role-pill">✓ Премиум-перк от Админа</span></div>
+        <div class="perk-grant-icon">${escapeHtml(icon)}</div>
+        <div class="perk-grant-name">${escapeHtml(name)}</div>
+        ${gr.note ? `<div class="gift-note">«${escapeHtml(gr.note)}»</div>` : ''}
+        ${actionHtml}
+      </div>
+    `;
+  }
+
   async function adminDeleteMessageAction(msg) {
     const chatId = state.activeChatId;
     const chat = state.chats[chatId];
@@ -23126,6 +23343,183 @@ var qrcode = function() {
         id: msgId,
         text: '',
         starGrant,
+        senderName: state.identity.name,
+        ts,
+        tsMs
+      });
+      await S.updateMessage(msgId, { status: res.ok ? 'sent' : 'queued' });
+      chat.lastMsgStatus = res.ok ? 'sent' : 'queued';
+      S.setChats(state.chats);
+      renderChatList();
+      if (state.activeChatId === chatId) await reloadActiveMessages(false);
+    });
+  }
+
+  // ---------- Admin: Объявление и Премиум-чек ----------
+  function openAdminAnnounceModal() {
+    if (!isGlobalAdmin(state.identity.pkHex)) {
+      toast('Объявления доступны только официальному Админу');
+      return;
+    }
+    const chatId = state.activeChatId;
+    const chat = state.chats[chatId];
+    if (!chat) return;
+    openModal('📢 Объявление (Админ)', `
+      <label class="field-label">
+        <span>Заголовок</span>
+        <input id="announceTitleInput" type="text" maxlength="80" placeholder="Например: Технические работы">
+      </label>
+      <label class="field-label">
+        <span>Текст объявления</span>
+        <textarea id="announceBodyInput" rows="5" maxlength="600" placeholder="Важная новость для всех участников…" style="resize:vertical;"></textarea>
+      </label>
+      <div class="info-box" style="margin-top:8px;">
+        <div class="info-box-label">ℹ️ Как это работает</div>
+        Карточка придёт всем участникам этого чата и будет подписана вашей админской подписью. Подделать её нельзя.
+      </div>
+      <button type="button" class="btn btn-primary" id="announceSendBtn">📢 Отправить объявление</button>
+    `);
+
+    $('announceSendBtn').addEventListener('click', async () => {
+      const title = $('announceTitleInput').value.trim().slice(0, 80) || 'Объявление';
+      const body = $('announceBodyInput').value.trim().slice(0, 600);
+      if (!body) { toast('Введите текст объявления'); return; }
+      closeModal();
+
+      const announce = { id: C.randomId(12), title, body };
+      const msgId = C.randomId(12);
+      const { ts, tsMs, sortKey } = nextOutgoingTiming(chatId);
+      await S.saveMessage({
+        id: msgId,
+        chatId,
+        senderPk: state.identity.pkHex,
+        senderName: state.identity.name,
+        out: true,
+        text: '',
+        media: null,
+        announce,
+        reactions: {},
+        status: 'sending',
+        ts,
+        tsMs,
+        sortKey
+      });
+      chat.lastMsgTs = ts;
+      chat.lastMsgSortKey = sortKey;
+      chat.lastMsgText = `📢 ${title}`;
+      chat.lastMsgSender = 'Вы';
+      chat.lastMsgStatus = 'sending';
+      S.setChats(state.chats);
+      renderChatList();
+      await reloadActiveMessages(true);
+
+      const res = await sendPayloadToChat(chatId, {
+        v: 1,
+        type: 'msg',
+        id: msgId,
+        text: '',
+        announce,
+        senderName: state.identity.name,
+        ts,
+        tsMs
+      });
+      await S.updateMessage(msgId, { status: res.ok ? 'sent' : 'queued' });
+      chat.lastMsgStatus = res.ok ? 'sent' : 'queued';
+      S.setChats(state.chats);
+      renderChatList();
+      if (state.activeChatId === chatId) await reloadActiveMessages(false);
+    });
+  }
+
+  function openAdminPerkGrantModal() {
+    if (!isGlobalAdmin(state.identity.pkHex)) {
+      toast('Выдача премиума доступна только официальному Админу');
+      return;
+    }
+    const chatId = state.activeChatId;
+    const chat = state.chats[chatId];
+    if (!chat) return;
+    let targetOptions = '';
+    if (chat.type === 'group') {
+      const peers = Object.entries(chat.members || {}).filter(([pk]) => pk !== state.identity.pkHex);
+      targetOptions = `
+        <label class="field-label">
+          <span>Кому выдать перк</span>
+          <select id="perkGrantTargetSelect" class="modal-input">
+            <option value="ALL">🎁 Всем в группе (по 1 разу каждый)</option>
+            ${peers.map(([pk, m]) => `<option value="${escapeHtml(pk)}">${escapeHtml(m.name || contactName(pk))}</option>`).join('')}
+          </select>
+        </label>
+      `;
+    }
+    openModal('🎟 Выдать премиум (Админ)', `
+      ${targetOptions}
+      <label class="field-label">
+        <span>Перк из магазина</span>
+        <select id="perkGrantSelect" class="modal-input">
+          ${PERK_CATALOG.map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.icon)} ${escapeHtml(item.name)} — ${item.price} ⭐</option>`).join('')}
+        </select>
+      </label>
+      <label class="field-label">
+        <span>Комментарий</span>
+        <input id="perkGrantNoteInput" type="text" maxlength="100" placeholder="За вклад в сообщество!">
+      </label>
+      <div class="info-box" style="margin-top:8px;">
+        <div class="info-box-label">ℹ️ Как это работает</div>
+        Получатель активирует перк одной кнопкой в карточке — звёзды не списываются. Перк появится в его профиле так, как будто он его купил.
+      </div>
+      <button type="button" class="btn btn-primary" id="perkGrantSendBtn">🎟 Отправить премиум-чек</button>
+    `);
+
+    $('perkGrantSendBtn').addEventListener('click', async () => {
+      const perkId = String($('perkGrantSelect').value || '');
+      const item = PERK_CATALOG.find((p) => p.id === perkId);
+      if (!item) return;
+      let toPk = chat.type === 'dm' ? chat.peerPubkey : (chat.type === 'saved' ? state.identity.pkHex : 'ALL');
+      let toName = chat.type === 'dm' ? chat.title : state.identity.name;
+      if (chat.type === 'group') {
+        const sel = $('perkGrantTargetSelect');
+        if (sel) {
+          toPk = sel.value;
+          toName = sel.options[sel.selectedIndex]?.textContent || '';
+        }
+      }
+      const note = $('perkGrantNoteInput').value.trim();
+      closeModal();
+
+      const perkGrant = { id: C.randomId(12), perkId: item.id, toPk, toName, note };
+      const msgId = C.randomId(12);
+      const { ts, tsMs, sortKey } = nextOutgoingTiming(chatId);
+      await S.saveMessage({
+        id: msgId,
+        chatId,
+        senderPk: state.identity.pkHex,
+        senderName: state.identity.name,
+        out: true,
+        text: '',
+        media: null,
+        perkGrant,
+        reactions: {},
+        status: 'sending',
+        ts,
+        tsMs,
+        sortKey
+      });
+      chat.lastMsgTs = ts;
+      chat.lastMsgSortKey = sortKey;
+      chat.lastMsgText = `🎟 Премиум от Админа: ${item.name}`;
+      chat.lastMsgSender = 'Вы';
+      chat.lastMsgStatus = 'sending';
+      S.setChats(state.chats);
+      renderChatList();
+      await reloadActiveMessages(true);
+
+      const res = await sendPayloadToChat(chatId, {
+        v: 1,
+        type: 'msg',
+        id: msgId,
+        text: '',
+        perkGrant,
         senderName: state.identity.name,
         ts,
         tsMs
